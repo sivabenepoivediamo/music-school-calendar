@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>School Name</title>
+<style>
+:root{--bg:#fff;--fg:#111;--mut:#6b7280;--ac:#1d4ed8;--line:#e5e7eb;--ok:#15803d;--bad:#b91c1c;--soft:#f5f7fb}
+:root[data-t=dark]{--bg:#000;--fg:#e8e8e8;--mut:#9ca3af;--ac:#f97316;--line:#262626;--ok:#4ade80;--bad:#f87171;--soft:#111}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,sans-serif}
+.m,td.n,th.n{font-family:ui-monospace,Menlo,monospace}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
+.brand{display:flex;flex-direction:column;margin-right:12px}
+.brand b{font-size:14px;letter-spacing:.03em}
+.brand span{font-size:11px;color:var(--mut)}
+#bn:empty::before{content:attr(data-ph);color:var(--mut)}#bn{cursor:text;border-radius:4px}#bn:hover{text-decoration:underline dotted;text-underline-offset:4px}#bn[contenteditable=true]{outline:1px solid var(--ac);padding:0 4px;text-decoration:none;min-width:40px}
+.lg{display:flex}.lg button{border-radius:0;padding:6px 8px}.lg button+button{margin-left:-1px}
+nav{display:flex;gap:2px;flex:1;flex-wrap:wrap}
+button,input,select{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 10px}
+input[type=checkbox]{width:auto;accent-color:var(--ac)}
+button{cursor:pointer}button:hover{border-color:var(--ac)}
+button.on,button.p{background:var(--ac);border-color:var(--ac);color:var(--bg)}
+button.x{color:var(--bad)}
+main{padding:16px;max-width:1200px;margin:auto}.w{overflow-x:auto}#fs{max-width:190px}.ns{-moz-appearance:textfield;appearance:textfield}.ns::-webkit-inner-spin-button,.ns::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.bar{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.bar h2{margin:0;font-size:16px;font-weight:500;text-transform:capitalize;min-width:150px;text-align:center}
+.g{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.g>div{border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:92px;padding:4px;overflow:hidden}
+.g .h{min-height:0;color:var(--mut);font-size:11px;text-transform:uppercase;text-align:center;padding:6px}
+.g .d{cursor:pointer}.g .d:hover{background:var(--soft)}
+.g .t{outline:1px solid var(--ac);outline-offset:-1px}
+.g .d>span{color:var(--mut);font-size:12px}
+.c{display:block;width:100%;text-align:left;margin-top:2px;padding:1px 5px;font-size:11px;border:0;border-left:3px solid var(--ac);background:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c.done{border-color:var(--ok)}.c.absent{border-color:var(--bad);text-decoration:line-through;color:var(--mut)}
+table{width:100%;border-collapse:collapse}
+th{font-weight:500;color:var(--mut);text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line)}
+td.n,th.n{text-align:right}tfoot td{font-weight:600}
+h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:20px 0 8px;font-weight:500}
+.s-absent{color:var(--bad)}.s-done{color:var(--ok)}
+dialog{border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);padding:16px;width:min(420px,94vw)}
+dialog::backdrop{background:#0008}
+dialog label{display:block;font-size:12px;color:var(--mut);margin-top:10px}
+dialog input,dialog select{width:100%;margin-top:3px}
+.r{display:flex;gap:8px}.r>*{flex:1}
+.a{display:flex;gap:6px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}
+@media(max-width:640px){.g>div{min-height:64px}.c{font-size:10px}}
+.ag{display:none}.ad{border-bottom:1px solid var(--line);padding:6px 0}.dh{font-size:12px;text-transform:uppercase;color:var(--mut);padding:4px 0;cursor:pointer}.dh.t{color:var(--ac)}
+nav button{white-space:nowrap}
+@media(max-width:640px){
+body{-webkit-text-size-adjust:100%}
+main{padding:10px 10px 76px}
+header{position:static;padding:10px}
+.brand{flex:1 1 100%;margin:0}
+#fs{flex:1 1 0;min-width:0;max-width:none}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:3;background:var(--bg);border-top:1px solid var(--line);padding:0 0 env(safe-area-inset-bottom);gap:0;flex-wrap:nowrap;overflow-x:auto}
+nav button{flex:1 1 auto;border:0;border-radius:0;padding:12px 4px;font-size:11px}
+input,select{font-size:16px}
+button{min-height:36px}
+input[type=checkbox]{width:20px;height:20px}
+.bar input:not([type=checkbox]),.bar select{flex:1 1 110px;min-width:0}
+.bar h2{min-width:0;flex:1}
+th,td{padding:6px 4px}
+table{font-size:13px}
+.g{display:none}.ag{display:block}
+.ag .c{font-size:14px;padding:9px 10px;margin-top:4px;white-space:normal}
+.lt td:nth-child(4),.lt th:nth-child(4),.lt td:nth-child(7),.lt th:nth-child(7),.lt td:nth-child(10),.lt th:nth-child(10){display:none}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="brand"><b id="bn" onclick="editB()" onblur="endB(this)" onkeydown="keyB(event)" data-ti="brandQ"></b></div>
+<nav id="nav"></nav><select id="fs" onchange="fl=this.value;render()"></select>
+<button onclick="exp()" data-ti="exj">⤓ JSON</button>
+<button onclick="expPdf()" data-ti="exp">⤓ PDF</button>
+<button onclick="imp.click()" data-ti="imp">⤒</button>
+<input id="imp" type="file" accept=".json" hidden onchange="impF(this)">
+<span class="lg"><button data-l="it" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></span>
+<button onclick="theme()" data-ti="thm">◐</button>
+</header>
+<main id="v"></main>
+
+<dialog id="dlg"><form id="f" onsubmit="saveL(event)">
+<label><span data-i="student"></span><select name="sid" id="sid" onchange="pickS()"></select></label>
+<label><span data-i="teacher"></span><select name="tid" id="tid"></select></label>
+<label><span data-i="room"></span><select name="aid" id="aid"></select></label>
+<div class="r"><label><span data-i="date"></span><input type="date" name="date" required></label><label><span data-i="time"></span><input type="time" name="time" required></label></div>
+<div class="r"><label><span data-i="dur"></span><input type="number" name="dur" min="5" step="5" required></label>
+<label><span data-i="status"></span><select name="st"><option value="planned" data-i="st.planned"></option><option value="done" data-i="st.done"></option><option value="absent" data-i="st.absent"></option></select></label></div>
+<label id="repL"><span data-i="rep"></span><input type="number" name="rep" min="1" max="52" value="1"></label>
+<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" name="paid" style="width:auto;margin:0"><span data-i="paid"></span></label>
+<label><span data-i="notes"></span><input name="note"></label>
+<div class="a">
+<button type="button" class="x" id="bDel" onclick="delL()"></button>
+<button type="button" class="x" id="bAll" onclick="delL(1)"></button>
+<button type="button" id="bRec" onclick="recL()" data-i="makeup"></button>
+<button type="button" onclick="dlg.close()" data-i="cancel"></button>
+<button class="p" data-i="save"></button>
+</div></form></dialog>
+
+<dialog id="dlgB"><form id="fb" onsubmit="saveB(event)">
+<b id="bT"></b>
+<label><span data-i="scope"></span><select name="scope" onchange="cntB()"><option value="all" data-i="all"></option><option value="fut" data-i="fut"></option><option value="past" data-i="past"></option></select></label>
+<p id="bN" style="margin:8px 0 0;color:var(--mut);font-size:12px"></p>
+<p style="margin:10px 0 0;font-size:12px;color:var(--mut)" data-i="bhint"></p>
+<label><span data-i="teacher"></span><select name="tid"></select></label>
+<label><span data-i="room"></span><select name="aid"></select></label>
+<div class="r"><label><span data-i="time"></span><input type="time" name="time"></label><label><span data-i="dur"></span><input type="number" name="dur" min="5" step="5"></label></div>
+<div class="r"><label><span data-i="status"></span><select name="st"><option value="" data-i="keep"></option><option value="planned" data-i="st.planned"></option><option value="done" data-i="st.done"></option><option value="absent" data-i="st.absent"></option></select></label>
+<label><span data-i="paid"></span><select name="paid"><option value="" data-i="keep"></option><option value="1" data-i="yes"></option><option value="0" data-i="no"></option></select></label></div>
+<label><span data-i="notes"></span><input name="note" data-p="keep"></label>
+<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" name="clrn" style="width:auto;margin:0"><span data-i="clrN"></span></label>
+<div class="a"><button type="button" onclick="dlgB.close()" data-i="cancel"></button><button class="p" data-i="apply"></button></div>
+</form></dialog>
+
+<script>
+const $=s=>document.querySelector(s),uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pd=s=>{const[a,b,c]=s.split('-');return new Date(a,b-1,c)};
+const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const hh=m=>+(m/60).toFixed(2);
+const CUR='EUR',LOC={it:"it-IT",en:'en-GB'};
+const DICT={
+it:{brand:'Nome Scuola',brandQ:'Nome istituzione','tab.cal':'Calendario','tab.tea':'Insegnanti','tab.stu':'Alunni','tab.ins':'Strumenti','tab.aul':'Aule','tab.les':'Lezioni','tab.ore':'Ore',
+allT:'Tutti gli insegnanti',today:'Oggi',exj:'Esporta JSON',exp:'Esporta PDF del mese',imp:'Importa',thm:'Tema',
+student:'Alunno',teacher:'Insegnante',room:'Aula',date:'Data',time:'Ora',dur:'Durata (min)',status:'Stato','st.planned':'Prevista','st.done':'Svolta','st.absent':'Assente',
+rep:'Ripeti (settimane)',paid:'Retribuita',notes:'Note',del:'Elimina',del1b:'Elimina questo',delAll:n=>`Elimina tutti (${n})`,makeup:'Recupero',cancel:'Annulla',save:'Salva',apply:'Applica',
+scope:'Quali lezioni',all:'Tutte',fut:'Da oggi in poi',past:'Fino a ieri',bhint:'Compila solo i campi da cambiare: quelli lasciati vuoti restano invariati.',clrN:'Cancella le note',keep:'— non modificare —',noRoom:'Nessuna aula',bT:'Modifica lezioni · ',
+bN:n=>n+(n===1?' lezione verrà modificata':' lezioni verranno modificate'),yes:'Sì',no:'No',
+fn:'Nome',ln:'Cognome',rate:c=>`${c}/lezione`,rateD:c=>`${c}/lezione disabilità`,instr:'Strumento',instrs:'Strumenti',stus:'Alunni',les:'Lezioni',age:'Età',dis:'Alunno con disabilità',teas:'Insegnanti',
+editAll:'Modifica tutte le lezioni',lesBtn:'✎ Lezioni',min:'Min',makeupBtn:'Recupera',dueMk:'Recuperi da fare',allL:'Tutte le lezioni',rmM:'Rimuovi tutti',rmF:'Rimuovi tutte',
+sDone:'Svolte',sPlan:'Previste',sPaid:'Retribuite',toPay:'Da retribuire',amtDue:'Importo da pagare',amtPaid:'Importo pagato',payM:'Retribuisci mese',total:'Totale',abs:'Assenze',toMk:'Da recuperare',totH:'Totale ore',ofDis:'di cui alunni con disabilità (svolte)',
+clrT:n=>n?`Eliminare tutti gli insegnanti e ${n} lezioni?`:'Eliminare tutti gli insegnanti?',delT:n=>n?`Eliminare insegnante e le sue ${n} lezioni?`:'Eliminare insegnante?',delS:'Eliminare alunno e sue lezioni?',
+setAu:(n,p)=>`Impostare l'aula per tutte le ${n} lezioni di ${p}?`,clrI:'Eliminare tutti gli strumenti?',delI:'Eliminare strumento?',clrR:'Eliminare tutte le aule?',delR:'Eliminare aula?',
+delN:n=>`Eliminare ${n} lezioni?`,del1q:"Eliminare lezione?",clrO:(n,m)=>`Eliminare le ${n} lezioni di ${m}?`,pay1:'Segnare come retribuite le ore svolte del mese?',payAll:'Segnare come retribuite le ore svolte del mese per tutti gli insegnanti?',
+noLes:'Nessuna lezione da modificare',noChg:'Nessuna modifica selezionata',bConf:(n,p)=>`Modificare ${n} lezioni di ${p}?`,badF:'File non valido',repl:'Sostituire i dati attuali?',
+pTea:'INSEGNANTI',pTh:['Insegnante','Svolte','Prev.','Retr.','Da retr.','Lez.','Dis.','Tariffa','Tar.dis.','Da pagare','Pagato'],pLg:'Lez. = da pagare (svolte non retribuite + previste)   Dis. = di cui con disabilità',pCur:c=>`Importi in ${c}`,
+pIns:'STRUMENTI',pHrs:'ORE',pHh:['Alunno','Età','Strumento','Insegnante','Prev.','Svolte','Assenze','Da rec.'],pLes:'LEZIONI',pLh:['Data','Ora','Alunno','Strum.','Insegnante','Aula','Min','Stato','Retr.'],
+pLg2:'R = recupero   (rec.) = recuperata   Retr. = retribuita',pMk:'RECUPERI DA FARE',more:n=>`+${n} altre`,pCal:'x = assente   R = recupero   * = alunno con disabilità   corsivo = note'},
+en:{brand:'School Name',brandQ:'Institution name','tab.cal':'Calendar','tab.tea':'Teachers','tab.stu':'Students','tab.ins':'Instruments','tab.aul':'Rooms','tab.les':'Lessons','tab.ore':'Hours',
+allT:'All teachers',today:'Today',exj:'Export JSON',exp:'Export month PDF',imp:'Import',thm:'Theme',
+student:'Student',teacher:'Teacher',room:'Room',date:'Date',time:'Time',dur:'Duration (min)',status:'Status','st.planned':'Planned','st.done':'Done','st.absent':'Absent',
+rep:'Repeat (weeks)',paid:'Paid',notes:'Notes',del:'Delete',del1b:'Delete this',delAll:n=>`Delete all (${n})`,makeup:'Make-up',cancel:'Cancel',save:'Save',apply:'Apply',
+scope:'Which lessons',all:'All',fut:'From today on',past:'Until yesterday',bhint:'Fill in only the fields to change: empty ones stay unchanged.',clrN:'Clear notes',keep:'— keep unchanged —',noRoom:'No room',bT:'Edit lessons · ',
+bN:n=>n+(n===1?' lesson will be changed':' lessons will be changed'),yes:'Yes',no:'No',
+fn:'First name',ln:'Last name',rate:c=>`${c}/lesson`,rateD:c=>`${c}/lesson disability`,instr:'Instrument',instrs:'Instruments',stus:'Students',les:'Lessons',age:'Age',dis:'Student with disability',teas:'Teachers',
+editAll:'Edit all lessons',lesBtn:'✎ Lessons',min:'Min',makeupBtn:'Make up',dueMk:'Make-ups due',allL:'All lessons',rmM:'Remove all',rmF:'Remove all',
+sDone:'Done',sPlan:'Planned',sPaid:'Paid',toPay:'To pay',amtDue:'Amount due',amtPaid:'Amount paid',payM:'Pay month',total:'Total',abs:'Absences',toMk:'To make up',totH:'Total hours',ofDis:'of which students with disability (done)',
+clrT:n=>n?`Delete all teachers and ${n} lessons?`:'Delete all teachers?',delT:n=>n?`Delete teacher and their ${n} lessons?`:'Delete teacher?',delS:'Delete student and their lessons?',
+setAu:(n,p)=>`Set the room for all ${n} lessons of ${p}?`,clrI:'Delete all instruments?',delI:'Delete instrument?',clrR:'Delete all rooms?',delR:'Delete room?',
+delN:n=>`Delete ${n} lessons?`,del1q:'Delete lesson?',clrO:(n,m)=>`Delete the ${n} lessons of ${m}?`,pay1:'Mark this month\'s done hours as paid?',payAll:'Mark this month\'s done hours as paid for all teachers?',
+noLes:'No lessons to change',noChg:'No change selected',bConf:(n,p)=>`Change ${n} lessons of ${p}?`,badF:'Invalid file',repl:'Replace current data?',
+pTea:'TEACHERS',pTh:['Teacher','Done','Plan.','Paid','To pay','Les.','Dis.','Rate','Dis.rate','Due','Paid'],pLg:'Les. = to pay (done unpaid + planned)   Dis. = of which with disability',pCur:c=>`Amounts in ${c}`,
+pIns:'INSTRUMENTS',pHrs:'HOURS',pHh:['Student','Age','Instrument','Teacher','Plan.','Done','Absent','Make-up'],pLes:'LESSONS',pLh:['Date','Time','Student','Instr.','Teacher','Room','Min','Status','Paid'],
+pLg2:'R = make-up   (rec.) = made up   Paid = paid',pMk:'MAKE-UPS DUE',more:n=>`+${n} more`,pCal:'x = absent   R = make-up   * = student with disability   italic = notes'}};
+let lg,SY='';try{lg=localStorage.getItem('acadL')}catch{}
+if(!DICT[lg])lg=navigator.language?.startsWith('it')?'it':'en';
+const _=(k,...a)=>{const v=DICT[lg][k];return typeof v==='function'?v(...a):v},loc=()=>LOC[lg],sym=()=>SY;
+const wd=()=>[...Array(7)].map((x,i)=>{const w=new Date(2024,0,1+i).toLocaleDateString(loc(),{weekday:'short'}).replace('.','');return w[0].toUpperCase()+w.slice(1)});
+function applyI18n(){
+ document.documentElement.lang=lg;SY=new Intl.NumberFormat(loc(),{style:'currency',currency:CUR}).formatToParts(0).find(p=>p.type==='currency').value;
+ document.title=brand();$('#bn').textContent=db.name;$('#bn').dataset.ph=_('brand');
+ document.querySelectorAll('[data-i]').forEach(e=>e.textContent=_(e.dataset.i));
+ document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=_(e.dataset.p));
+ document.querySelectorAll('[data-ti]').forEach(e=>e.title=_(e.dataset.ti));
+ document.querySelectorAll('.lg button').forEach(b=>b.classList.toggle('on',b.dataset.l===lg));
+}
+function setLang(x){lg=x;try{localStorage.setItem('acadL',x)}catch{}render()}
+const empty=()=>({name:'',teachers:[],students:[],instruments:[],rooms:[],lessons:[]});
+const brand=()=>db.name||_('brand'),slug=()=>brand().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toLowerCase()||'school';
+function editB(){const e=$('#bn');if(e.isContentEditable)return;e.contentEditable=true;e.textContent=db.name;e.focus();getSelection().selectAllChildren(e)}
+function keyB(ev){if(ev.key==='Enter'){ev.preventDefault();ev.target.blur()}else if(ev.key==='Escape'){ev.target.dataset.x=1;ev.target.blur()}}
+function endB(e){if(!e.isContentEditable)return;e.contentEditable=false;if(!e.dataset.x){const n=e.textContent.trim();db.name=n;save()}delete e.dataset.x;render()}
+const SM={prevista:'planned',svolta:'done',assente:'absent'};
+function mig(d){d.teachers??=[];d.rooms??=[];d.name??='';
+ d.students.forEach(s=>{s.tid??='';s.iids??=s.iid?[s.iid]:[];delete s.iid});
+ d.lessons.forEach(l=>{l.tid??='';l.paid??=false;l.st=SM[l.st]||l.st});
+ d.teachers.forEach(t=>{t.rate??=0;t.rateD??=t.rate;t.iids??=[]});
+ [...d.teachers,...d.students].forEach(p=>{if(p.surname===undefined){const w=String(p.name||'').trim().split(/\s+/).filter(Boolean);if(w.length>1){p.surname=w.pop();p.name=w.join(' ')}else{p.surname='';p.name=w[0]||''}}});return d}
+let db;try{db=mig(JSON.parse(localStorage.getItem('acad'))||empty())}catch{db=empty()}
+const save=()=>{try{localStorage.setItem('acad',JSON.stringify(db))}catch{}};
+let view='cal',cur=new Date(),ed={},fl='';cur.setDate(1);
+const TABS=()=>Object.fromEntries('cal tea stu ins aul les ore'.split(' ').map(k=>[k,_('tab.'+k)]));
+const stu=id=>db.students.find(s=>s.id===id),ins=id=>db.instruments.find(i=>i.id===id);
+const ab=(a,b)=>String(a||'').localeCompare(String(b||''),loc(),{sensitivity:'base',numeric:true}),full=p=>p?[p.surname,p.name].filter(Boolean).join(' '):'',byP=(a,b)=>ab(a.surname,b.surname)||ab(a.name,b.name),sp=a=>[...a].sort(byP),insS=()=>[...db.instruments].sort((a,b)=>ab(a.name,b.name)),inames=ids=>(ids||[]).map(i=>ins(i)?.name).filter(Boolean).sort(ab);
+const sname=id=>full(stu(id))||'—',iname=sid=>inames(stu(sid)?.iids).join(', ');
+const room=id=>db.rooms.find(r=>r.id===id),rname=id=>room(id)?.name||'',rS=()=>[...db.rooms].sort((a,b)=>ab(a.name,b.name)),rOpts=(sel,ph='—')=>`<option value="">${ph}</option>`+rS().map(r=>`<option value="${r.id}" ${r.id===sel?'selected':''}>${esc(r.name)}</option>`).join('');
+const tea=id=>db.teachers.find(t=>t.id===id),tname=id=>full(tea(id))||'—';
+const lsF=()=>fl?db.lessons.filter(l=>l.tid===fl):db.lessons,multi=()=>!fl&&db.teachers.length>1;
+const ym=()=>cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0');
+const eur=v=>v.toLocaleString(loc(),{style:'currency',currency:CUR});
+const ini=t=>(t?.name?.trim()[0]||'')+(t?.surname?.trim()[0]||'');
+const price=l=>{const t=tea(l.tid);return(stu(l.sid)?.dis?t?.rateD:t?.rate)||0};
+const setPaid=(l,v)=>{l.paid=v;if(v)l.amt=price(l);else delete l.amt};
+const recovered=a=>db.lessons.some(l=>l.mk===a.id);
+const toRec=()=>lsF().filter(l=>l.st==='absent'&&!recovered(l));
+const sorted=a=>[...a].sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time));
+
+function theme(){const r=document.documentElement,d=r.dataset.t==='dark'?'light':'dark';r.dataset.t=d;try{localStorage.setItem('acadT',d)}catch{}}
+try{document.documentElement.dataset.t=localStorage.getItem('acadT')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch{}
+
+function go(v){view=v;render()}
+function mv(n){cur.setMonth(cur.getMonth()+n);render()}
+const nav=()=>`<div class="bar"><button onclick="mv(-1)">‹</button><h2>${cur.toLocaleDateString(loc(),{month:'long',year:'numeric'})}</h2><button onclick="mv(1)">›</button><button onclick="cur=new Date();cur.setDate(1);render()">${_('today')}</button></div>`;
+
+function auto(){const t=iso(new Date());let c;db.lessons.forEach(l=>{if(l.st==='planned'&&l.date<t){l.st='done';c=1}});if(c)save()}
+function render(){
+ auto();applyI18n();
+ $('#nav').innerHTML=Object.entries(TABS()).map(([k,t])=>`<button class="${k===view?'on':''}" onclick="go('${k}')">${t}</button>`).join('');
+ if(fl&&!tea(fl))fl='';
+ $('#fs').innerHTML=`<option value="">${_('allT')}</option>`+tOpts(fl);$('#fs').style.display=db.teachers.length>1?'':'none';
+ $('#v').innerHTML=({cal:vCal,tea:vTea,stu:vStu,ins:vIns,aul:vAul,les:vLes,ore:vOre})[view]();
+}
+
+function vCal(){
+ const y=cur.getFullYear(),m=cur.getMonth(),off=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),today=iso(new Date());
+ const chip=l=>`<button class="c ${l.st}" title="${esc([rname(l.aid),l.note].filter(Boolean).join(' · '))}" onclick="event.stopPropagation();openL('${l.id}')">${l.time} ${l.paid?sym()+' ':''}${multi()?ini(tea(l.tid))+' ':''}${l.mk?'↺ ':''}${esc(sname(l.sid))}${stu(l.sid)?.dis?'*':''}</button>`;
+ let h=nav().replace(/<\/div>$/,'<button class="p" onclick="openL()">+</button></div>')+'<div class="g">'+wd().map(d=>`<div class="h">${d}</div>`).join('')+'<div></div>'.repeat(off),a='';
+ for(let d=1;d<=n;d++){
+  const k=iso(new Date(y,m,d)),ls=sorted(lsF().filter(l=>l.date===k));
+  h+=`<div class="d ${k===today?'t':''}" onclick="openL('','${k}')"><span>${d}</span>${ls.map(chip).join('')}</div>`;
+  if(ls.length)a+=`<div class="ad"><div class="dh ${k===today?'t':''}" onclick="openL('','${k}')">${new Date(y,m,d).toLocaleDateString(loc(),{weekday:'short',day:'numeric'})}</div>${ls.map(chip).join('')}</div>`;
+ }
+ return h+'</div><div class="ag">'+(a||'<p style="color:var(--mut)">—</p>')+'</div>';
+}
+
+const so={tea:1,stu:1,ins:1,aul:1},arw=k=>so[k]>0?'▲':'▼',tgS=k=>{so[k]*=-1;render()};
+const srt=(a,k)=>[...a].sort((x,y)=>so[k]*(k==='ins'||k==='aul'?ab(x.name,y.name):byP(x,y)));
+const tOpts=sel=>sp(db.teachers).map(t=>`<option value="${t.id}" ${t.id===sel?'selected':''}>${esc(full(t))}</option>`).join('');
+function vTea(){
+ return `<div class="bar"><input id="nn" placeholder="${_('fn')}"><input id="nc" placeholder="${_('ln')}"><input id="nr" class="ns" type="number" min="0" step="any" placeholder="${_('rate',sym())}" style="width:100px"><input id="nrd" class="ns" type="number" min="0" step="any" placeholder="${_('rateD',sym())}" style="width:170px"><button class="p" onclick="addT()">+</button>${db.teachers.length?'<button class="x" style="margin-left:auto" onclick="clrT()">'+_('rmM')+'</button>':''}</div>
+ <div class="w"><table><tr><th style="cursor:pointer" onclick="tgS('tea')">${_('ln')} ${arw('tea')}<th>${_('fn')}<th>${_('instrs')}<th class="n">${_('rate',sym())}<th class="n">${_('rateD',sym())}<th class="n">${_('stus')}<th class="n">${_('les')}<th></tr>${srt(db.teachers,'tea').map(t=>`<tr><td><a href="#" style="color:inherit" onclick="renT('${t.id}','surname');return false">${esc(t.surname)||'—'}</a><td><a href="#" style="color:inherit" onclick="renT('${t.id}','name');return false">${esc(t.name)||'—'}</a>
+ <td>${insS().map(i=>`<button style="margin:2px" class="${(t.iids||[]).includes(i.id)?'on':''}" onclick="togI('${t.id}','${i.id}')">${esc(i.name)}</button>`).join('')||'—'}
+ <td class="n"><input class="ns" type="number" min="0" step="any" value="${t.rate}\" style="width:80px;text-align:right" onchange="setR('${t.id}',this.value,'rate')"><td class="n"><input class="ns" type="number" min="0" step="any" value="${t.rateD}" style="width:80px;text-align:right" onchange="setR('${t.id}',this.value,'rateD')"><td class="n">${db.students.filter(s=>s.tid===t.id).length}<td class="n">${db.lessons.filter(l=>l.tid===t.id).length}<td class="n"><button class="x" onclick="delT('${t.id}')">✕</button></tr>`).join('')}</table></div>`;
+}
+function addT(){const n=$('#nn').value.trim(),c=$('#nc').value.trim();if(!n&&!c)return;const rt=Math.max(0,+$('#nr').value||0),rd=$('#nrd').value;db.teachers.push({id:uid(),name:n,surname:c,rate:rt,rateD:rd===''?rt:Math.max(0,+rd||0),iids:[]});save();render()}
+function clrT(){const n=db.lessons.length;if(!confirm(_('clrT',n)))return;db.teachers=[];db.lessons=[];db.students.forEach(s=>s.tid='');save();render()}
+function wipe(ids,msg){if(!ids.size||!confirm(msg))return;db.lessons=db.lessons.filter(l=>!ids.has(l.id));save();render()}
+function renT(id,k){const t=tea(id),n=prompt(k==='surname'?_('ln'):_('fn'),t[k]||'');if(n!==null&&(n.trim()||t[k==='name'?'surname':'name'])){t[k]=n.trim();save();render()}}
+function togI(tid,iid){const t=tea(tid),a=t.iids||[];t.iids=a.includes(iid)?a.filter(x=>x!==iid):[...a,iid];save();render()}
+function setR(id,v,k){tea(id)[k]=Math.max(0,+v||0);save()}
+function delT(id){const n=db.lessons.filter(l=>l.tid===id).length;if(!confirm(_('delT',n)))return;db.lessons=db.lessons.filter(l=>l.tid!==id);db.teachers=db.teachers.filter(t=>t.id!==id);db.students.forEach(s=>{if(s.tid===id)s.tid=''});save();render()}
+
+function vStu(){
+ const ss=fl?db.students.filter(s=>s.tid===fl):db.students,io=sel=>db.instruments.map(i=>`<option value="${i.id}" ${i.id===sel?'selected':''}>${esc(i.name)}</option>`).join('');
+ return `<div class="bar"><input id="nn" placeholder="${_('fn')}"><input id="nc" placeholder="${_('ln')}"><input id="na" class="ns" type="number" min="0" max="120" placeholder="${_('age')}" style="width:70px"><span id="ni">${insS().map(i=>`<button type="button" data-i="${i.id}" style="margin:2px" onclick="this.classList.toggle('on')">${esc(i.name)}</button>`).join('')}</span><select id="nt">${tOpts(fl)}</select><select id="nau">${rOpts('',_('room'))}</select><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="nd">${_('dis')}</label><button class="p" onclick="addS()">+</button></div>
+ <div class="w"><table><tr><th style="cursor:pointer" onclick="tgS('stu')">${_('ln')} ${arw('stu')}<th>${_('fn')}<th class="n">${_('age')}<th>${_('instr')}<th>${_('teacher')}<th>${_('room')}<th class="n">${_('dis')}<th class="n">${_('les')}<th></tr>${srt(ss,'stu').map(s=>`<tr><td><a href="#" style="color:inherit" onclick="renS('${s.id}','surname');return false">${esc(s.surname)||'—'}</a><td><a href="#" style="color:inherit" onclick="renS('${s.id}','name');return false">${esc(s.name)||'—'}</a>
+ <td class="n"><input class="ns" type="number" min="0" max="120" value="${s.age??''}" style="width:60px;text-align:right" onchange="setA('${s.id}',this.value)">
+ <td>${insS().map(i=>`<button style="margin:2px" class="${(s.iids||[]).includes(i.id)?'on':''}" onclick="togSI('${s.id}','${i.id}')">${esc(i.name)}</button>`).join('')||'—'}
+ <td><select onchange="setT('${s.id}',this.value)"><option value="">—</option>${tOpts(s.tid)}</select>
+ <td><select onchange="setAu('${s.id}',this.value)">${rOpts(s.aid)}</select>
+ <td class="n"><input type="checkbox" ${s.dis?'checked':''} onchange="setD('${s.id}',this.checked)"><td class="n">${lsF().filter(l=>l.sid===s.id).length}<td class="n" style="white-space:nowrap"><button ${lsF().some(l=>l.sid===s.id)?'':'disabled'} title="${_('editAll')}" onclick="openBulk('${s.id}')">${_('lesBtn')}</button> <button class="x" onclick="delS('${s.id}')">✕</button></tr>`).join('')}</table></div>`;
+}
+function addS(){const n=$('#nn').value.trim(),c=$('#nc').value.trim();if(!n&&!c)return;db.students.push({id:uid(),name:n,surname:c,age:$('#na').value===''?'':+$('#na').value,iids:[...document.querySelectorAll('#ni button.on')].map(b=>b.dataset.i),tid:$('#nt').value,dis:$('#nd').checked,aid:$('#nau').value});save();render()}
+function renS(id,k){const s=stu(id),n=prompt(k==='surname'?_('ln'):_('fn'),s[k]||'');if(n!==null&&(n.trim()||s[k==='name'?'surname':'name'])){s[k]=n.trim();save();render()}}
+function togSI(id,iid){const s=stu(id),a=s.iids||[];s.iids=a.includes(iid)?a.filter(x=>x!==iid):[...a,iid];save();render()}
+function setA(id,v){stu(id).age=v===''?'':Math.max(0,+v||0);save()}
+function setT(id,v){stu(id).tid=v;save()}
+function setAu(id,v){const s=stu(id),n=db.lessons.filter(l=>l.sid===id).length;if(n&&!confirm(_('setAu',n,full(s)))){render();return}s.aid=v;db.lessons.forEach(l=>{if(l.sid===id)l.aid=v});save();render()}
+function setD(id,v){stu(id).dis=v;save()}
+function delS(id){if(!confirm(_('delS')))return;db.students=db.students.filter(s=>s.id!==id);db.lessons=db.lessons.filter(l=>l.sid!==id);save();render()}
+
+function vIns(){
+ return `<div class="bar"><input id="nn" placeholder="${_('instr')}"><button class="p" onclick="addI()">+</button>${db.instruments.length?'<button class="x" style="margin-left:auto" onclick="clrI()">'+_('rmM')+'</button>':''}</div>
+ <table><tr><th style="cursor:pointer" onclick="tgS('ins')">${_('instr')} ${arw('ins')}<th class="n">${_('stus')}<th>${_('teas')}<th></tr>${srt(db.instruments,'ins').map(i=>`<tr><td>${esc(i.name)}<td class="n">${db.students.filter(s=>(s.iids||[]).includes(i.id)).length}<td>${db.teachers.filter(t=>(t.iids||[]).includes(i.id)).sort(byP).map(t=>esc(full(t))).join(', ')||'—'}<td class="n"><button class="x" onclick="delI('${i.id}')">✕</button></tr>`).join('')}</table>`;
+}
+function addI(){const n=$('#nn').value.trim();if(!n)return;db.instruments.push({id:uid(),name:n});save();render()}
+function clrI(){if(!db.instruments.length||!confirm(_('clrI')))return;db.instruments=[];db.teachers.forEach(t=>t.iids=[]);db.students.forEach(s=>s.iids=[]);save();render()}
+function delI(id){if(!confirm(_('delI')))return;db.instruments=db.instruments.filter(i=>i.id!==id);db.teachers.forEach(t=>t.iids=(t.iids||[]).filter(x=>x!==id));db.students.forEach(s=>s.iids=(s.iids||[]).filter(x=>x!==id));save();render()}
+
+function vAul(){
+ return `<div class="bar"><input id="nn" placeholder="${_('room')}"><button class="p" onclick="addR()">+</button>${db.rooms.length?'<button class="x" style="margin-left:auto" onclick="clrR()">'+_('rmF')+'</button>':''}</div>
+ <table><tr><th style="cursor:pointer" onclick="tgS('aul')">${_('room')} ${arw('aul')}<th class="n">${_('stus')}<th class="n">${_('les')}<th></tr>${srt(db.rooms,'aul').map(r=>`<tr><td><a href="#" style="color:inherit" onclick="renR('${r.id}');return false">${esc(r.name)}</a><td class="n">${db.students.filter(s=>s.aid===r.id).length}<td class="n">${db.lessons.filter(l=>l.aid===r.id).length}<td class="n"><button class="x" onclick="delR('${r.id}')">✕</button></tr>`).join('')}</table>`;
+}
+function addR(){const n=$('#nn').value.trim();if(!n)return;db.rooms.push({id:uid(),name:n});save();render()}
+function renR(id){const r=room(id),n=prompt(_('room'),r.name);if(n?.trim()){r.name=n.trim();save();render()}}
+function clrR(){if(!db.rooms.length||!confirm(_('clrR')))return;db.rooms=[];db.students.forEach(s=>s.aid='');db.lessons.forEach(l=>l.aid='');save();render()}
+function delR(id){if(!confirm(_('delR')))return;db.rooms=db.rooms.filter(r=>r.id!==id);db.students.forEach(s=>{if(s.aid===id)s.aid=''});db.lessons.forEach(l=>{if(l.aid===id)l.aid=''});save();render()}
+
+function vLes(){
+ const rows=(a,rec)=>`<div class="w"><table class="lt"><tr><th>${_('date')}<th>${_('time')}<th>${_('student')}<th>${_('instr')}<th>${_('teacher')}<th>${_('room')}<th class="n">${_('min')}<th>${_('status')}<th class="n">${_('paid')}<th>${_('notes')}<th></tr>${a.map(l=>`<tr><td class="m">${l.date}<td class="m">${l.time}<td>${l.mk?'↺ ':''}${esc(sname(l.sid))}<td>${esc(iname(l.sid))}<td>${esc(tname(l.tid))}<td>${esc(rname(l.aid))}<td class="n">${l.dur}<td class="s-${l.st}">${_('st.'+l.st)}${l.st==='absent'&&recovered(l)?' ✓':''}<td class="n"><input type="checkbox" ${l.paid?'checked':''} onchange="setP('${l.id}',this.checked)"><td style="color:var(--mut)">${esc(l.note)}
+ <td class="n">${rec?`<button class="p" onclick="recFor('${l.id}')">${_('makeupBtn')}</button> `:''}<button onclick="openL('${l.id}')">✎</button></tr>`).join('')}</table></div>`;
+ const r=sorted(toRec());
+ return (lsF().length?`<div class="bar"><button class="x" style="margin-left:auto" onclick="clrL()">${_('rmF')}</button></div>`:'')+(r.length?`<h3>${_('dueMk')} · ${r.length}</h3>`+rows(r,1):'')+`<h3>${_('allL')}</h3>`+rows(sorted(lsF()).reverse());
+}
+function setP(id,v){setPaid(db.lessons.find(l=>l.id===id),v);save()}
+function clrL(){const ids=new Set(lsF().map(l=>l.id));wipe(ids,_('delN',ids.size))}
+
+function ore(){
+ const p=ym(),T={p:0,s:0,a:0,r:0,d:0},TT={s:0,g:0,u:0,amt:0,n:0,nd:0,ip:0,pv:0},inM=l=>l.date.startsWith(p),sum=a=>a.reduce((t,l)=>t+l.dur,0);
+ const rows=sp(db.students).map(s=>{
+  const ls=lsF().filter(l=>l.sid===s.id&&inM(l)),su=f=>sum(ls.filter(f));
+  const o={p:su(l=>l.st==='planned'),s:su(l=>l.st==='done'),a:su(l=>l.st==='absent'),r:su(l=>l.st==='absent'&&!recovered(l))};
+  for(const k of'psar')T[k]+=o[k];if(s.dis)T.d+=o.s;
+  return{s,o};
+ }).filter(({o})=>!fl||o.p+o.s+o.a>0);
+ const tr=sp(db.teachers).filter(t=>!fl||t.id===fl).map(t=>{
+  const al=db.lessons.filter(l=>l.tid===t.id&&inM(l)&&(l.st==='done'||l.st==='planned')),ls=al.filter(l=>l.st==='done'),pv=sum(al.filter(l=>l.st==='planned')),s=sum(ls),g=sum(ls.filter(l=>l.paid)),u=s-g,ip=al.filter(l=>l.paid).reduce((x,l)=>x+(l.amt??price(l)),0),un=al.filter(l=>!l.paid),dd=un.filter(l=>stu(l.sid)?.dis).length,amt=(un.length-dd)*t.rate+dd*t.rateD;
+  TT.s+=s;TT.g+=g;TT.u+=u;TT.amt+=amt;TT.pv+=pv;TT.ip+=ip;TT.n+=un.length;TT.nd+=dd;
+  return{t,s,g,u,amt,n:un.length,nd:dd,ip,pv};
+ });
+ return{p,T,rows,tr,TT};
+}
+function vOre(){
+ const{T,rows,tr,TT}=ore();
+ return nav().replace(/<\/div>$/,(lsF().some(l=>l.date.startsWith(ym()))?'<button class="x" style="margin-left:auto" onclick="clrO()">'+_('rmF')+'</button>':'')+'</div>')+`<h3>${_('teas')}</h3><div class="w"><table><tr><th>${_('teacher')}<th class="n">${_('sDone')}<th class="n">${_('sPlan')}<th class="n">${_('sPaid')}<th class="n">${_('toPay')}<th class="n">${_('amtDue')}<th class="n">${_('amtPaid')}<th></tr>${tr.map(({t,s,g,u,amt,ip,pv})=>`<tr><td>${esc(full(t))}<td class="n">${hh(s)}<td class="n">${hh(pv)}<td class="n">${hh(g)}<td class="n">${hh(u)}<td class="n">${eur(amt)}<td class="n">${eur(ip)}<td class="n">${u?`<button class="p" onclick="payM('${t.id}')">${_('payM')}</button>`:s?'<span class="s-svolta">✓</span>':''}</tr>`).join('')}<tfoot><tr><td>${_('total')}<td class="n">${hh(TT.s)}<td class="n">${hh(TT.pv)}<td class="n">${hh(TT.g)}<td class="n">${hh(TT.u)}<td class="n">${eur(TT.amt)}<td class="n">${eur(TT.ip)}<td class="n">${TT.u&&tr.length>1?'<button class="p" onclick="payM()">'+_('payM')+'</button>':''}</tr></tfoot></table></div>
+ <h3>${_('stus')}</h3><div class="w"><table><tr><th>${_('student')}<th>${_('instr')}<th class="n">${_('sPlan')}<th class="n">${_('sDone')}<th class="n">${_('abs')}<th class="n">${_('toMk')}</tr>${rows.map(({s,o})=>`<tr><td>${esc(sname(s.id))}<td>${esc(iname(s.id))}<td class="n">${hh(o.p)}<td class="n">${hh(o.s)}<td class="n">${hh(o.a)}<td class="n">${hh(o.r)}</tr>`).join('')}<tfoot><tr><td>${_('totH')}<td><td class="n">${hh(T.p)}<td class="n">${hh(T.s)}<td class="n">${hh(T.a)}<td class="n">${hh(T.r)}</tr><tr><td>${_('ofDis')}<td><td><td class="n">${hh(T.d)}<td><td></tr></tfoot></table></div>`;
+}
+function clrO(){const p=ym(),ids=new Set(lsF().filter(l=>l.date.startsWith(p)).map(l=>l.id));wipe(ids,_('clrO',ids.size,cur.toLocaleDateString(loc(),{month:'long',year:'numeric'})))}
+function payM(id){
+ if(!confirm(_(id?'pay1':'payAll')))return;
+ const p=ym();lsF().forEach(l=>{if((!id||l.tid===id)&&l.st==='done'&&l.date.startsWith(p)&&!l.paid)setPaid(l,true)});save();render();
+}
+
+function openL(id,date,mk,sid){
+ if(!db.teachers.length){go('tea');return}if(!db.students.length){go('stu');return}
+ const l=id?db.lessons.find(x=>x.id===id):{sid:sid||sp(db.students)[0].id,date:date||iso(new Date()),time:'15:00',dur:60,st:'planned',note:'',mk:mk||''};
+ ed={id,mk:l.mk,rid:l.rid};
+ $('#sid').innerHTML=sp(db.students).map(s=>`<option value="${s.id}">${esc(full(s))}</option>`).join('');
+ for(const k of['sid','date','time','dur','st','note'])f.elements[k].value=l[k];
+ $('#tid').innerHTML=tOpts();f.elements.tid.value=l.tid||stu(l.sid)?.tid||fl||sp(db.teachers)[0].id;f.elements.paid.checked=!!l.paid;
+ $('#aid').innerHTML=rOpts();f.elements.aid.value=id?(l.aid||''):(l.aid||stu(l.sid)?.aid||'');
+ f.elements.rep.value=1;
+ $('#repL').style.display=id?'none':'';
+ const n=l.rid?db.lessons.filter(x=>x.rid===l.rid).length:1;
+ $('#bDel').style.display=id?'':'none';
+ $('#bDel').textContent=_(n>1?'del1b':'del');
+ $('#bAll').style.display=id&&n>1?'':'none';
+ $('#bAll').textContent=_('delAll',n);
+ $('#bRec').style.display=id&&l.st==='absent'?'':'none';
+ dlg.showModal();
+}
+function saveL(e){
+ e.preventDefault();const v=Object.fromEntries(new FormData(f)),b={sid:v.sid,tid:v.tid,aid:v.aid||'',paid:f.elements.paid.checked,time:v.time,dur:+v.dur,st:v.st,note:v.note,mk:ed.mk||''};
+ if(ed.id)Object.assign(db.lessons.find(l=>l.id===ed.id),b,{date:v.date});
+ else{const N=Math.max(1,+v.rep||1),rid=N>1?uid():'';for(let i=0;i<N;i++){const d=pd(v.date);d.setDate(d.getDate()+7*i);db.lessons.push({id:uid(),...b,rid,date:iso(d)})}}
+ db.lessons.forEach(l=>{if(!l.paid)delete l.amt;else l.amt??=price(l)});save();dlg.close();render();
+}
+function delL(all){
+ const ids=new Set(all&&ed.rid?db.lessons.filter(l=>l.rid===ed.rid).map(l=>l.id):[ed.id]);
+ if(!confirm(ids.size>1?_('delN',ids.size):_('del1q')))return;
+ db.lessons=db.lessons.filter(l=>!ids.has(l.id)&&!ids.has(l.mk));save();dlg.close();render()}
+let bs='';
+const bSel=()=>{const t=iso(new Date()),k=fb.elements.scope.value;return lsF().filter(l=>l.sid===bs&&(k==='all'||(k==='fut'?l.date>=t:l.date<t)))};
+function cntB(){const n=bSel().length;$('#bN').textContent=_('bN',n)}
+function openBulk(id){
+ bs=id;fb.reset();
+ $('#bT').textContent=_('bT')+sname(id);
+ fb.elements.tid.innerHTML=`<option value="">${_('keep')}</option>`+tOpts();
+ fb.elements.aid.innerHTML=`<option value="__">${_('keep')}</option><option value="">${_('noRoom')}</option>`+rS().map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join('');
+ cntB();dlgB.showModal();
+}
+function saveB(e){
+ e.preventDefault();const v=fb.elements,a=bSel(),c={},pp=v.paid.value;
+ if(!a.length){alert(_('noLes'));return}
+ if(v.tid.value)c.tid=v.tid.value;
+ if(v.aid.value!=='__')c.aid=v.aid.value;
+ if(v.time.value)c.time=v.time.value;
+ if(v.dur.value)c.dur=Math.max(5,+v.dur.value);
+ if(v.st.value)c.st=v.st.value;
+ if(v.clrn.checked)c.note='';else if(v.note.value.trim())c.note=v.note.value.trim();
+ if(!Object.keys(c).length&&!pp){alert(_('noChg'));return}
+ if(!confirm(_('bConf',a.length,sname(bs))))return;
+ a.forEach(l=>{Object.assign(l,c);if(pp)setPaid(l,pp==='1')});
+ save();dlgB.close();render();
+}
+function recL(){const id=ed.id;dlg.close();recFor(id)}
+function recFor(id){const a=db.lessons.find(l=>l.id===id);openL('',iso(new Date()),a.id,a.sid);f.elements.dur.value=a.dur;f.elements.tid.value=a.tid;f.elements.aid.value=a.aid||''}
+function pickS(){if(!ed.id&&!ed.mk){const s=stu(f.elements.sid.value);if(s?.tid)f.elements.tid.value=s.tid;f.elements.aid.value=s?.aid||''}}
+
+const pad=(s,n)=>String(s).padEnd(n).slice(0,n),padL=(s,n)=>String(s).padStart(n);
+function report(){
+ const{p,T,rows,tr,TT}=ore(),L=[],a=(t,b)=>L.push({t,b}),nm=id=>full(stu(id))||'-',n2=v=>(+v).toFixed(2),C=(t,w)=>[t,w],R=(t,w)=>[t,w,1];
+ const wc=(t,w)=>{const o=[];let c='';String(t).split(/\s+/).filter(Boolean).forEach(x=>{while(x.length>w){if(c){o.push(c);c=''}o.push(x.slice(0,w));x=x.slice(w)}if(c&&(c+' '+x).length>w){o.push(c);c=x}else c=c?c+' '+x:x});if(c)o.push(c);return o.length?o:['']};
+ const row=(c,b)=>{const m=c.map(([t,w,r])=>r?[padL(t,w)]:wc(t,w-1)),n=Math.max(...m.map(x=>x.length));for(let i=0;i<n;i++)a(c.map(([,w,r],k)=>r?(i?' '.repeat(w):m[k][0]):pad(m[k][i]||'',w)).join(''),b)};
+ a(ACC(),1);a(SUB());a(MESE(),1);a('');
+ a(_('pTea'),1);
+ row(_('pTh').map((x,i)=>(i?R:C)(x,[18,7,6,6,9,5,5,8,9,10,10][i])),1);
+ tr.forEach(({t,s,g,u,amt,n,nd,ip,pv})=>row([C(full(t),18),R(hh(s),7),R(hh(pv),6),R(hh(g),6),R(hh(u),9),R(n,5),R(nd,5),R(n2(t.rate),8),R(n2(t.rateD),9),R(n2(amt),10),R(n2(ip),10)]));
+ row([C(_('total'),18),R(hh(TT.s),7),R(hh(TT.pv),6),R(hh(TT.g),6),R(hh(TT.u),9),R(TT.n,5),R(TT.nd,5),R('',8),R('',9),R(n2(TT.amt),10),R(n2(TT.ip),10)],1);
+ a(_('pLg'));a(_('pCur',CUR));a('');
+ a(_('pIns'),1);
+ tr.forEach(({t})=>row([C(full(t),20),C(inames(t.iids).join(', ')||'-',75)]));a('');
+ a(_('pHrs'),1);
+ {const h=_('pHh');row([C(h[0],26),R(h[1],4),C('',1),C(h[2],14),C(h[3],14),R(h[4],7),R(h[5],7),R(h[6],8),R(h[7],8)],1)};
+ rows.forEach(({s,o})=>row([C(nm(s.id),26),R(s.age??'',4),C('',1),C(iname(s.id),14),C(full(tea(s.tid))||'-',14),R(hh(o.p),7),R(hh(o.s),7),R(hh(o.a),8),R(hh(o.r),8)]));
+ row([C(_('total'),59),R(hh(T.p),7),R(hh(T.s),7),R(hh(T.a),8),R(hh(T.r),8)],1);
+ row([C(_('ofDis'),66),R(hh(T.d),7)]);a('');
+ const ls=sorted(lsF().filter(l=>l.date.startsWith(p)));
+ a(_('pLes'),1);
+ {const h=_('pLh');row([C(h[0],11),C(h[1],6),C(h[2],22),C(h[3],11),C(h[4],11),C(h[5],8),R(h[6],4),C('',2),C(h[7],14),C(h[8],5)],1)};
+ ls.forEach(l=>{row([C(l.date,11),C(l.time,6),C((l.mk?'R ':'')+nm(l.sid),22),C(iname(l.sid),11),C(full(tea(l.tid))||'-',11),C(rname(l.aid),8),R(l.dur,4),C('',2),C(_('st.'+l.st).toLowerCase()+(l.st==='absent'&&recovered(l)?' (rec.)':''),14),C(l.paid?_('yes').toLowerCase():'',5)]);if(l.note)wrapT(l.note,90,' '.repeat(11),99).forEach(t=>a(t))});
+ a('');a(_('pLg2'));
+ const r=sorted(toRec());
+ if(r.length){a('');a(_('pMk'),1);r.forEach(l=>row([C(l.date,12),C(nm(l.sid),50),R(l.dur+' min',9)]))}
+ return L;
+}
+const pe=s=>String(s).replace(/[^\x20-\xff]/g,'?').replace(/[\\()]/g,'\\$&');
+const tx=(x,y,t,b,z=9)=>`BT /F${b===2?3:b?2:1} ${z} Tf ${x.toFixed(1)} ${y.toFixed(1)} Td (${pe(t)}) Tj ET\n`;
+function textPages(L){
+ const W=595,H=842,M=40,LH=12,N=Math.floor((H-2*M)/LH),P=[];
+ for(let i=0;i<L.length;i+=N)P.push({w:W,h:H,c:L.slice(i,i+N).map((l,k)=>tx(M,H-M-9-k*LH,l.t,l.b)).join('')});
+ return P;
+}
+const LN=8,ACC=brand,SUB=()=>fl?full(tea(fl)):_('allT'),MESE=()=>cur.toLocaleDateString(loc(),{month:'long',year:'numeric'}).toUpperCase();
+function wrapT(t,nc,ind,max=3){
+ const ch=nc-ind.length,ws=String(t).split(/\s+/).filter(Boolean).flatMap(w=>w.match(new RegExp('.{1,'+ch+'}','g'))),o=[];
+ let c='';
+ ws.forEach(w=>{if(c&&(c+' '+w).length>ch){o.push(ind+c);c=w}else c=c?c+' '+w:w});
+ if(c)o.push(ind+c);
+ return o.length>max?[...o.slice(0,max-1),o[max-1].slice(0,nc-3)+'...']:o;
+}
+function nameLines(pre,name,d,nc){
+ const w=name.split(' '),ind=' '.repeat(pre.length),full=pre+name+(d?'*':'');
+ let L=full.length<=nc||w.length<2?[full]:[pre+w.slice(0,-1).join(' '),ind+w.at(-1)+(d?'*':'')];
+ return L.flatMap(p=>{const o=[];while(p.length>nc){o.push(p.slice(0,nc));p=ind+p.slice(nc)}return[...o,p]});
+}
+function calPage(){
+ const W=842,H=595,M=30,y=cur.getFullYear(),m=cur.getMonth(),off=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),wk=Math.ceil((off+n)/7);
+ const cw=(W-2*M)/7,top=H-M-32,rh=(top-16-M-10)/wk,cap=Math.floor((rh-14)/LN),nc=Math.floor((cw-6)/4.2);
+ let c=tx(M,H-M-8,ACC(),1,12)+tx(M,H-M-20,SUB(),0,9)+tx(W-M-MESE().length*7.2,H-M-8,MESE(),1,12);
+ c+=`0.6 G 0.5 w 0.9 g ${M} ${top-16} ${W-2*M} 16 re B 0 g\n`;
+ wd().forEach((d,k)=>c+=tx(M+k*cw+4,top-11,d,1,8));
+ for(let i=0;i<wk*7;i++){
+  const x=M+(i%7)*cw,yt=top-16-Math.floor(i/7)*rh,d=i-off+1,ok=d>=1&&d<=n;
+  c+=`${ok?'1':'0.96'} g ${x.toFixed(1)} ${(yt-rh).toFixed(1)} ${cw.toFixed(1)} ${rh.toFixed(1)} re B 0 g\n`;
+  if(!ok)continue;
+  c+=tx(x+3,yt-9,String(d),1,8);
+  const en=sorted(lsF().filter(l=>l.date===iso(new Date(y,m,d)))).map(l=>{const s=stu(l.sid);return[...nameLines(`${l.time} ${multi()?ini(tea(l.tid))+' ':''}${l.mk?'R ':''}${l.st==='absent'?'x ':''}`,s?full(s):'-',s?.dis,nc).map(t=>({t,b:0})),...wrapT(l.note||'',nc,'  ').map(t=>({t,b:2}))]});
+  const tot=en.reduce((t,e)=>t+e.length,0),lim=tot>cap?cap-1:cap;
+  let r=0,sh=0;
+  for(const e of en){if(r+e.length>lim)break;e.forEach(q=>c+=tx(x+3,yt-19-r++*LN,q.t,q.b,7));sh++}
+  if(sh<en.length)c+=tx(x+3,yt-19-r*LN,_('more',en.length-sh),1,7);
+ }
+ c+=tx(M,M-6,_('pCal'),0,7);
+ return{w:W,h:H,c};
+}
+function mkPdf(P){
+ const o=[];
+ o[1]='<</Type/Catalog/Pages 2 0 R>>';
+ o[2]=`<</Type/Pages/Kids[${P.map((_,i)=>`${6+2*i} 0 R`).join(' ')}]/Count ${P.length}>>`;
+ o[3]='<</Type/Font/Subtype/Type1/BaseFont/Courier/Encoding/WinAnsiEncoding>>';
+ o[4]='<</Type/Font/Subtype/Type1/BaseFont/Courier-Bold/Encoding/WinAnsiEncoding>>';
+ o[5]='<</Type/Font/Subtype/Type1/BaseFont/Courier-Oblique/Encoding/WinAnsiEncoding>>';
+ P.forEach((q,i)=>{
+  o[6+2*i]=`<</Type/Page/Parent 2 0 R/MediaBox[0 0 ${q.w} ${q.h}]/Resources<</Font<</F1 3 0 R/F2 4 0 R/F3 5 0 R>>>>/Contents ${7+2*i} 0 R>>`;
+  o[7+2*i]=`<</Length ${q.c.length}>>\nstream\n${q.c}\nendstream`;
+ });
+ let out='%PDF-1.4\n',xr=[];
+ for(let i=1;i<o.length;i++){xr[i]=out.length;out+=`${i} 0 obj\n${o[i]}\nendobj\n`}
+ const x=out.length;
+ out+=`xref\n0 ${o.length}\n0000000000 65535 f \n`+xr.slice(1).map(v=>String(v).padStart(10,'0')+' 00000 n \n').join('')+`trailer\n<</Size ${o.length}/Root 1 0 R>>\nstartxref\n${x}\n%%EOF`;
+ return new Blob([Uint8Array.from(out,ch=>ch.charCodeAt(0))],{type:'application/pdf'});
+}
+function expPdf(){const a=document.createElement('a');a.href=URL.createObjectURL(mkPdf([calPage(),...textPages(report())]));a.download=slug()+'-'+cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'.pdf';a.click()}
+
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db)],{type:'application/json'}));a.download=slug()+'-'+iso(new Date())+'.json';a.click()}
+function impF(i){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.students&&d.instruments&&d.lessons&&confirm(_('repl'))){db=mig(d);save();render()}}catch{alert(_('badF'))}};r.readAsText(i.files[0]);i.value=''}
+const f=$('#f'),dlg=$('#dlg'),fb=$('#fb'),dlgB=$('#dlgB');
+render();
+</script>
+</body>
+</html>
