@@ -21,7 +21,7 @@ button,input,select{font:inherit;color:var(--fg);background:var(--bg);border:1px
 input[type=checkbox]{width:auto;accent-color:var(--ac)}
 button{cursor:pointer}button:hover{border-color:var(--ac)}
 button.on,button.p{background:var(--ac);border-color:var(--ac);color:var(--bg)}
-button.x{color:var(--bad)}
+button.x{color:var(--bad)}button:disabled{opacity:.4;pointer-events:none}
 main{padding:16px;max-width:1200px;margin:auto}.w{overflow-x:auto}#fs{max-width:190px}.ns{-moz-appearance:textfield;appearance:textfield}.ns::-webkit-inner-spin-button,.ns::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .bar{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
 .bar h2{margin:0;font-size:16px;font-weight:500;text-transform:capitalize;min-width:150px;text-align:center}
@@ -74,7 +74,7 @@ table{font-size:13px}
 <div class="brand"><b id="bn" onclick="editB()" onblur="endB(this)" onkeydown="keyB(event)" data-ti="brandQ"></b></div>
 <nav id="nav"></nav><select id="fs" onchange="fl=this.value;render()"></select>
 <button onclick="exp()" data-ti="exj">⤓ JSON</button>
-<button onclick="expPdf()" data-ti="exp">⤓ PDF</button>
+<button onclick="openPdf()" data-ti="exp">⤓ PDF</button>
 <button onclick="imp.click()" data-ti="imp">⤒</button>
 <input id="imp" type="file" accept=".json" hidden onchange="impF(this)">
 <span class="lg"><button data-l="it" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></span>
@@ -116,6 +116,13 @@ table{font-size:13px}
 <div class="a"><button type="button" onclick="dlgB.close()" data-i="cancel"></button><button class="p" data-i="apply"></button></div>
 </form></dialog>
 
+<dialog id="dlgP"><form onsubmit="expPdf(event)">
+<b data-i="pdfT"></b>
+<label id="pFL"><span data-i="teacher"></span><select id="pF" onchange="fl=this.value;render()"></select></label>
+<div id="pK"></div>
+<div class="a"><button type="button" onclick="dlgP.close()" data-i="cancel"></button><button class="p" id="pX" data-i="expB"></button></div>
+</form></dialog>
+
 <script>
 const $=s=>document.querySelector(s),uid=()=>Math.random().toString(36).slice(2,9);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -124,7 +131,7 @@ const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${Str
 const hh=m=>+(m/60).toFixed(2);
 const CUR='EUR',LOC={it:"it-IT",en:'en-GB'};
 const DICT={
-it:{'tab.pag':'Pagamenti','tab.bil':'Bilancio',rcv:'Incassata',feeDef:'Quote predefinite',feeEnr:'Quota iscrizione',feeLes:'Quota lezione',enrs:'Iscrizioni',recd:'Ricevuto',toRcv:'Da ricevere',nLes:'Lez.',rcvM:'Incassa svolte',rcvT:'Incassa tutte',rcvA1:'Segnare come incassate tutte le lezioni del mese (svolte e previste)?',rcvAA:'Segnare come incassate tutte le lezioni del mese (svolte e previste) per tutti gli alunni?',rcv1:'Segnare come incassate le lezioni svolte del mese?',rcvAll:'Segnare come incassate le lezioni svolte del mese per tutti gli alunni?',mM:'Mese',mY:'Anno',mT:'Totale',inc:'Entrate',outc:'Uscite',item:'Voce',act:'Effettivo',pend:'In sospeso',bal:'Saldo',lEnr:'Iscrizioni',lLes:'Quote lezioni',lOi:'Altre entrate',lComp:'Compensi',lOo:'Altre uscite',oth:'Altre voci',desc:'Descrizione',amt:'Importo',typ:'Tipo',tin:'Entrata',tout:'Uscita',delE:'Eliminare la voce?',brand:'Nome Scuola',brandQ:'Nome istituzione','tab.cal':'Calendario','tab.tea':'Insegnanti','tab.stu':'Alunni','tab.ins':'Strumenti','tab.aul':'Aule','tab.les':'Lezioni','tab.ore':'Ore',
+it:{pdfT:'Contenuto del PDF',expB:'Esporta','tab.pag':'Pagamenti','tab.bil':'Bilancio',rcv:'Incassata',feeDef:'Quote predefinite',feeEnr:'Quota iscrizione',feeLes:'Quota lezione',enrs:'Iscrizioni',recd:'Ricevuto',toRcv:'Da ricevere',nLes:'Lez.',rcvM:'Incassa svolte',rcvT:'Incassa tutte',rcvA1:'Segnare come incassate tutte le lezioni del mese (svolte e previste)?',rcvAA:'Segnare come incassate tutte le lezioni del mese (svolte e previste) per tutti gli alunni?',rcv1:'Segnare come incassate le lezioni svolte del mese?',rcvAll:'Segnare come incassate le lezioni svolte del mese per tutti gli alunni?',mM:'Mese',mY:'Anno',mT:'Totale',inc:'Entrate',outc:'Uscite',item:'Voce',act:'Effettivo',pend:'In sospeso',bal:'Saldo',lEnr:'Iscrizioni',lLes:'Quote lezioni',lOi:'Altre entrate',lComp:'Compensi',lOo:'Altre uscite',oth:'Altre voci',desc:'Descrizione',amt:'Importo',typ:'Tipo',tin:'Entrata',tout:'Uscita',delE:'Eliminare la voce?',brand:'Nome Scuola',brandQ:'Nome istituzione','tab.cal':'Calendario','tab.tea':'Insegnanti','tab.stu':'Alunni','tab.ins':'Strumenti','tab.aul':'Aule','tab.les':'Lezioni','tab.ore':'Ore',
 allT:'Tutti gli insegnanti',today:'Oggi',exj:'Esporta JSON',exp:'Esporta PDF del mese',imp:'Importa',thm:'Tema',
 student:'Alunno',teacher:'Insegnante',room:'Aula',date:'Data',time:'Ora',dur:'Durata (min)',status:'Stato','st.planned':'Prevista','st.done':'Svolta','st.absent':'Assente',
 rep:'Ripeti (settimane)',paid:'Retribuita',notes:'Note',del:'Elimina',del1b:'Elimina questo',delAll:n=>`Elimina tutti (${n})`,makeup:'Recupero',cancel:'Annulla',save:'Salva',apply:'Applica',
@@ -140,7 +147,7 @@ noLes:'Nessuna lezione da modificare',noChg:'Nessuna modifica selezionata',bConf
 pTea:'INSEGNANTI',pTh:['Insegnante','Svolte','Prev.','Retr.','Da retr.','Lez.','Dis.','Tariffa','Tar.dis.','Da pagare','Pagato'],pLg:'Lez. = da pagare (svolte non retribuite + previste)   Dis. = di cui con disabilità',pCur:c=>`Importi in ${c}`,
 pPay:'PAGAMENTI',pBil:'BILANCIO',pPh:['Alunno','Iscr. ric.','Iscr. da ric.','Lez.','Ricevuto','Da ric.'],pIns:'STRUMENTI',pHrs:'ORE',pHh:['Alunno','Età','Strumento','Insegnante','Prev.','Svolte','Assenze','Da rec.'],pLes:'LEZIONI',pLh:['Data','Ora','Alunno','Strum.','Insegnante','Aula','Min','Stato','Retr.'],
 pLg2:'R = recupero   (rec.) = recuperata   Retr. = retribuita',pMk:'RECUPERI DA FARE',more:n=>`+${n} altre`,pCal:'x = assente   R = recupero   * = alunno con disabilità   corsivo = note'},
-en:{'tab.pag':'Payments','tab.bil':'Balance',rcv:'Received',feeDef:'Default fees',feeEnr:'Enrollment fee',feeLes:'Lesson fee',enrs:'Enrollments',recd:'Received',toRcv:'To receive',nLes:'Les.',rcvM:'Collect done',rcvT:'Collect all',rcvA1:'Mark all lessons of the month (done and planned) as received?',rcvAA:'Mark all lessons of the month (done and planned) as received for all students?',rcv1:'Mark done lessons of the month as received?',rcvAll:'Mark done lessons of the month as received for all students?',mM:'Month',mY:'Year',mT:'All',inc:'Income',outc:'Expenses',item:'Item',act:'Actual',pend:'Pending',bal:'Balance',lEnr:'Enrollments',lLes:'Lesson fees',lOi:'Other income',lComp:'Compensation',lOo:'Other expenses',oth:'Other items',desc:'Description',amt:'Amount',typ:'Type',tin:'Income',tout:'Expense',delE:'Delete item?',brand:'School Name',brandQ:'Institution name','tab.cal':'Calendar','tab.tea':'Teachers','tab.stu':'Students','tab.ins':'Instruments','tab.aul':'Rooms','tab.les':'Lessons','tab.ore':'Hours',
+en:{pdfT:'PDF content',expB:'Export','tab.pag':'Payments','tab.bil':'Balance',rcv:'Received',feeDef:'Default fees',feeEnr:'Enrollment fee',feeLes:'Lesson fee',enrs:'Enrollments',recd:'Received',toRcv:'To receive',nLes:'Les.',rcvM:'Collect done',rcvT:'Collect all',rcvA1:'Mark all lessons of the month (done and planned) as received?',rcvAA:'Mark all lessons of the month (done and planned) as received for all students?',rcv1:'Mark done lessons of the month as received?',rcvAll:'Mark done lessons of the month as received for all students?',mM:'Month',mY:'Year',mT:'All',inc:'Income',outc:'Expenses',item:'Item',act:'Actual',pend:'Pending',bal:'Balance',lEnr:'Enrollments',lLes:'Lesson fees',lOi:'Other income',lComp:'Compensation',lOo:'Other expenses',oth:'Other items',desc:'Description',amt:'Amount',typ:'Type',tin:'Income',tout:'Expense',delE:'Delete item?',brand:'School Name',brandQ:'Institution name','tab.cal':'Calendar','tab.tea':'Teachers','tab.stu':'Students','tab.ins':'Instruments','tab.aul':'Rooms','tab.les':'Lessons','tab.ore':'Hours',
 allT:'All teachers',today:'Today',exj:'Export JSON',exp:'Export month PDF',imp:'Import',thm:'Theme',
 student:'Student',teacher:'Teacher',room:'Room',date:'Date',time:'Time',dur:'Duration (min)',status:'Status','st.planned':'Planned','st.done':'Done','st.absent':'Absent',
 rep:'Repeat (weeks)',paid:'Paid',notes:'Notes',del:'Delete',del1b:'Delete this',delAll:n=>`Delete all (${n})`,makeup:'Make-up',cancel:'Cancel',save:'Save',apply:'Apply',
@@ -425,42 +432,44 @@ function pickS(){if(!ed.id&&!ed.mk){const s=stu(f.elements.sid.value);if(s?.tid)
 
 const pad=(s,n)=>String(s).padEnd(n).slice(0,n),padL=(s,n)=>String(s).padStart(n);
 function report(){
- const{p,T,rows,tr,TT}=ore(),L=[],a=(t,b)=>L.push({t,b}),nm=id=>full(stu(id))||'-',n2=v=>(+v).toFixed(2),C=(t,w)=>[t,w],R=(t,w)=>[t,w,1];
+ const{p,T,rows,tr,TT}=ore(),L=[],S=PS,a=(t,b)=>L.push({t,b}),nm=id=>full(stu(id))||'-',n2=v=>(+v).toFixed(2),C=(t,w)=>[t,w],R=(t,w)=>[t,w,1];
  const wc=(t,w)=>{const o=[];let c='';String(t).split(/\s+/).filter(Boolean).forEach(x=>{while(x.length>w){if(c){o.push(c);c=''}o.push(x.slice(0,w));x=x.slice(w)}if(c&&(c+' '+x).length>w){o.push(c);c=x}else c=c?c+' '+x:x});if(c)o.push(c);return o.length?o:['']};
  const row=(c,b)=>{const m=c.map(([t,w,r])=>r?[padL(t,w)]:wc(t,w-1)),n=Math.max(...m.map(x=>x.length));for(let i=0;i<n;i++)a(c.map(([,w,r],k)=>r?(i?' '.repeat(w):m[k][0]):pad(m[k][i]||'',w)).join(''),b)};
  a(ACC(),1);a(SUB());a(MESE(),1);a('');
- a(_('pTea'),1);
+ if(S.tea){a(_('pTea'),1);
  row(_('pTh').map((x,i)=>(i?R:C)(x,[18,7,6,6,9,5,5,8,9,10,10][i])),1);
  tr.forEach(({t,s,g,u,amt,n,nd,ip,pv})=>row([C(full(t),18),R(hh(s),7),R(hh(pv),6),R(hh(g),6),R(hh(u),9),R(n,5),R(nd,5),R(n2(t.rate),8),R(n2(t.rateD),9),R(n2(amt),10),R(n2(ip),10)]));
  row([C(_('total'),18),R(hh(TT.s),7),R(hh(TT.pv),6),R(hh(TT.g),6),R(hh(TT.u),9),R(TT.n,5),R(TT.nd,5),R('',8),R('',9),R(n2(TT.amt),10),R(n2(TT.ip),10)],1);
- a(_('pLg'));a(_('pCur',CUR));a('');
- a(_('pIns'),1);
- tr.forEach(({t})=>row([C(full(t),20),C(inames(t.iids).join(', ')||'-',75)]));a('');
- a(_('pHrs'),1);
+ a(_('pLg'));a(_('pCur',CUR));a('');}
+ if(S.ins){a(_('pIns'),1);
+ tr.forEach(({t})=>row([C(full(t),20),C(inames(t.iids).join(', ')||'-',75)]));a('');}
+ if(S.hrs){a(_('pHrs'),1);
  {const h=_('pHh');row([C(h[0],26),R(h[1],4),C('',1),C(h[2],14),C(h[3],14),R(h[4],7),R(h[5],7),R(h[6],8),R(h[7],8)],1)};
  rows.forEach(({s,o})=>row([C(nm(s.id),26),R(s.age??'',4),C('',1),C(iname(s.id),14),C(full(tea(s.tid))||'-',14),R(hh(o.p),7),R(hh(o.s),7),R(hh(o.a),8),R(hh(o.r),8)]));
  row([C(_('total'),59),R(hh(T.p),7),R(hh(T.s),7),R(hh(T.a),8),R(hh(T.r),8)],1);
- row([C(_('ofDis'),66),R(hh(T.d),7)]);a('');
- const ls=sorted(lsF().filter(l=>l.date.startsWith(p)));
+ row([C(_('ofDis'),66),R(hh(T.d),7)]);a('');}
+ if(S.les){const ls=sorted(lsF().filter(l=>l.date.startsWith(p)));
  a(_('pLes'),1);
  {const h=_('pLh');row([C(h[0],11),C(h[1],6),C(h[2],22),C(h[3],11),C(h[4],11),C(h[5],8),R(h[6],4),C('',2),C(h[7],14),C(h[8],5)],1)};
  ls.forEach(l=>{row([C(l.date,11),C(l.time,6),C((l.mk?'R ':'')+nm(l.sid),22),C(iname(l.sid),11),C(full(tea(l.tid))||'-',11),C(rname(l.aid),8),R(l.dur,4),C('',2),C(_('st.'+l.st).toLowerCase()+(l.st==='absent'&&recovered(l)?' (rec.)':''),14),C(l.paid?_('yes').toLowerCase():'',5)]);if(l.note)wrapT(l.note,90,' '.repeat(11),99).forEach(t=>a(t))});
- a('');a(_('pLg2'));
+ a('');a(_('pLg2'));}
  const r=sorted(toRec());
- if(r.length){a('');a(_('pMk'),1);r.forEach(l=>row([C(l.date,12),C(nm(l.sid),50),R(l.dur+' min',9)]))}
+ if(S.mk&&r.length){a('');a(_('pMk'),1);r.forEach(l=>row([C(l.date,12),C(nm(l.sid),50),R(l.dur+' min',9)]))}
  {const ph=_('pPh'),PR=payRows(),B=bil(d=>d.startsWith(p)),bl=[B.inc[0]-B.out[0],B.inc[1]-B.out[1]],hd=[_('item'),_('act'),_('pend'),_('total')],
   ln=(t,v,b)=>row([C(t,40),R(n2(v[0]),14),R(n2(v[1]),14),R(n2(v[0]+v[1]),14)],b),hh4=()=>row([C(hd[0],40),R(hd[1],14),R(hd[2],14),R(hd[3],14)],1);
-  a('');a(_('pPay'),1);
+  if(S.pay){a('');a(_('pPay'),1);
   row([C(ph[0],24),R(ph[1],10),R(ph[2],11),R(ph[3],6),R(ph[4],11),R(ph[5],11)],1);
   PR.forEach(({s,n,got,due})=>row([C(nm(s.id),24),R(n2(enrIn(s)),10),R(n2(enrDue(s)),11),R(n,6),R(n2(got),11),R(n2(due),11)]));
-  row([C(_('total'),24),R(n2(sm(PR,r=>enrIn(r.s))),10),R(n2(sm(PR,r=>enrDue(r.s))),11),R(sm(PR,r=>r.n),6),R(n2(sm(PR,r=>r.got)),11),R(n2(sm(PR,r=>r.due)),11)],1);
-  a('');a(_('pBil'),1);a('');a(_('inc').toUpperCase(),1);hh4();
+  row([C(_('total'),24),R(n2(sm(PR,r=>enrIn(r.s))),10),R(n2(sm(PR,r=>enrDue(r.s))),11),R(sm(PR,r=>r.n),6),R(n2(sm(PR,r=>r.got)),11),R(n2(sm(PR,r=>r.due)),11)],1)}
+  if(S.bil){a('');a(_('pBil'),1);a('');a(_('inc').toUpperCase(),1);hh4();
   ln(_('lEnr'),B.enr);ln(_('lLes'),B.les);ln(_('lOi'),[B.oi,0]);ln(_('total'),B.inc,1);
   a('');a(_('outc').toUpperCase(),1);hh4();
   B.tc.forEach(({t,v})=>ln(_('lComp')+' '+full(t),v));ln(_('lOo'),[B.oo,0]);ln(_('total'),B.out,1);
   a('');ln(_('bal').toUpperCase(),bl,1);
   if(B.E.length){a('');a(_('oth').toUpperCase(),1);[...B.E].sort((x,y)=>x.date.localeCompare(y.date)).forEach(e=>row([C(e.date,12),C(e.desc,44),C(e.type==='in'?_('tin'):_('tout'),12),R(n2(e.amt),14)]))}
-  a('');a(_('pCur',CUR))}
+  }
+  if(S.pay||S.bil){a('');a(_('pCur',CUR))}
+ }
  return L;
 }
 const pe=s=>String(s).replace(/[^\x20-\xff]/g,'?').replace(/[\\()]/g,'\\$&');
@@ -520,11 +529,19 @@ function mkPdf(P){
  out+=`xref\n0 ${o.length}\n0000000000 65535 f \n`+xr.slice(1).map(v=>String(v).padStart(10,'0')+' 00000 n \n').join('')+`trailer\n<</Size ${o.length}/Root 1 0 R>>\nstartxref\n${x}\n%%EOF`;
  return new Blob([Uint8Array.from(out,ch=>ch.charCodeAt(0))],{type:'application/pdf'});
 }
-function expPdf(){const a=document.createElement('a');a.href=URL.createObjectURL(mkPdf([calPage(),...textPages(report())]));a.download=slug()+'-'+cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'.pdf';a.click()}
+const PK=[['cal','tab.cal'],['tea','tab.tea'],['ins','tab.ins'],['hrs','tab.ore'],['les','tab.les'],['mk','dueMk'],['pay','tab.pag'],['bil','tab.bil']];
+let PS={cal:1,tea:0,ins:0,hrs:0,les:0,mk:0,pay:0,bil:0};try{Object.assign(PS,JSON.parse(localStorage.getItem('acadP')))}catch{}
+const pdfSync=()=>$('#pX').disabled=!PK.some(([k])=>PS[k]);
+function pdfDraw(){
+ $('#pK').innerHTML=PK.map(([k,t])=>`<label style="display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--fg);font-size:14px"><input type="checkbox" ${PS[k]?'checked':''} onchange="PS['${k}']=this.checked;pdfSync()" style="width:auto;margin:0">${_(t)}</label>`).join('');
+ $('#pF').innerHTML=`<option value="">${_('allT')}</option>`+tOpts(fl);$('#pFL').style.display=db.teachers.length>1?'':'none';pdfSync();
+}
+function openPdf(){pdfDraw();dlgP.showModal()}
+function expPdf(e){e.preventDefault();try{localStorage.setItem('acadP',JSON.stringify(PS))}catch{}dlgP.close();const a=document.createElement('a');a.href=URL.createObjectURL(mkPdf([...(PS.cal?[calPage()]:[]),...(PK.slice(1).some(([k])=>PS[k])?textPages(report()):[])]));a.download=slug()+'-'+cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'.pdf';a.click()}
 
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db)],{type:'application/json'}));a.download=slug()+'-'+iso(new Date())+'.json';a.click()}
 function impF(i){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.students&&d.instruments&&d.lessons&&confirm(_('repl'))){db=mig(d);save();render()}}catch{alert(_('badF'))}};r.readAsText(i.files[0]);i.value=''}
-const f=$('#f'),dlg=$('#dlg'),fb=$('#fb'),dlgB=$('#dlgB');
+const f=$('#f'),dlg=$('#dlg'),fb=$('#fb'),dlgB=$('#dlgB'),dlgP=$('#dlgP');
 render();
 </script>
 </body>
