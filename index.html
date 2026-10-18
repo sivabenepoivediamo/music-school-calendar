@@ -15,7 +15,7 @@ header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 16px;
 .brand b{font-size:14px;letter-spacing:.03em}
 .brand span{font-size:11px;color:var(--mut)}
 #bn:empty::before{content:attr(data-ph);color:var(--mut)}#bn{cursor:text;border-radius:4px}#bn:hover{text-decoration:underline dotted;text-underline-offset:4px}#bn[contenteditable=true]{outline:1px solid var(--ac);padding:0 4px;text-decoration:none;min-width:40px}
-.lg{display:flex}.lg button{border-radius:0;padding:6px 8px}.lg button+button{margin-left:-1px}
+.lg,.sg{display:flex}.lg button,.sg button{border-radius:0;padding:6px 8px}.lg button+button,.sg button+button{margin-left:-1px}
 nav{display:flex;gap:2px;flex:1;flex-wrap:wrap}
 button,input,select{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 10px}
 input[type=checkbox]{width:auto;accent-color:var(--ac)}
@@ -65,7 +65,7 @@ th,td{padding:6px 4px}
 table{font-size:13px}
 .g{display:none}.ag{display:block}
 .ag .c{font-size:14px;padding:9px 10px;margin-top:4px;white-space:normal}
-.lt td:nth-child(4),.lt th:nth-child(4),.lt td:nth-child(7),.lt th:nth-child(7),.lt td:nth-child(10),.lt th:nth-child(10){display:none}
+.lt td:nth-child(4),.lt th:nth-child(4),.lt td:nth-child(7),.lt th:nth-child(7),.lt td:nth-child(11),.lt th:nth-child(11),.pt td:nth-child(4),.pt th:nth-child(4),.pt td:nth-child(6),.pt th:nth-child(6){display:none}
 }
 </style>
 </head>
@@ -90,7 +90,7 @@ table{font-size:13px}
 <div class="r"><label><span data-i="dur"></span><input type="number" name="dur" min="5" step="5" required></label>
 <label><span data-i="status"></span><select name="st"><option value="planned" data-i="st.planned"></option><option value="done" data-i="st.done"></option><option value="absent" data-i="st.absent"></option></select></label></div>
 <label id="repL"><span data-i="rep"></span><input type="number" name="rep" min="1" max="52" value="1"></label>
-<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" name="paid" style="width:auto;margin:0"><span data-i="paid"></span></label>
+<div class="r"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" name="paid" style="width:auto;margin:0"><span data-i="paid"></span></label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" name="rc" style="width:auto;margin:0"><span data-i="rcv"></span></label></div>
 <label><span data-i="notes"></span><input name="note"></label>
 <div class="a">
 <button type="button" class="x" id="bDel" onclick="delL()"></button>
@@ -110,6 +110,7 @@ table{font-size:13px}
 <div class="r"><label><span data-i="time"></span><input type="time" name="time"></label><label><span data-i="dur"></span><input type="number" name="dur" min="5" step="5"></label></div>
 <div class="r"><label><span data-i="status"></span><select name="st"><option value="" data-i="keep"></option><option value="planned" data-i="st.planned"></option><option value="done" data-i="st.done"></option><option value="absent" data-i="st.absent"></option></select></label>
 <label><span data-i="paid"></span><select name="paid"><option value="" data-i="keep"></option><option value="1" data-i="yes"></option><option value="0" data-i="no"></option></select></label></div>
+<label><span data-i="rcv"></span><select name="rc"><option value="" data-i="keep"></option><option value="1" data-i="yes"></option><option value="0" data-i="no"></option></select></label>
 <label><span data-i="notes"></span><input name="note" data-p="keep"></label>
 <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" name="clrn" style="width:auto;margin:0"><span data-i="clrN"></span></label>
 <div class="a"><button type="button" onclick="dlgB.close()" data-i="cancel"></button><button class="p" data-i="apply"></button></div>
@@ -123,7 +124,7 @@ const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${Str
 const hh=m=>+(m/60).toFixed(2);
 const CUR='EUR',LOC={it:"it-IT",en:'en-GB'};
 const DICT={
-it:{brand:'Nome Scuola',brandQ:'Nome istituzione','tab.cal':'Calendario','tab.tea':'Insegnanti','tab.stu':'Alunni','tab.ins':'Strumenti','tab.aul':'Aule','tab.les':'Lezioni','tab.ore':'Ore',
+it:{'tab.pag':'Pagamenti','tab.bil':'Bilancio',rcv:'Incassata',feeDef:'Quote predefinite',feeEnr:'Quota iscrizione',feeLes:'Quota lezione',enrs:'Iscrizioni',recd:'Ricevuto',toRcv:'Da ricevere',nLes:'Lez.',rcvM:'Incassa svolte',rcvT:'Incassa tutte',rcvA1:'Segnare come incassate tutte le lezioni del mese (svolte e previste)?',rcvAA:'Segnare come incassate tutte le lezioni del mese (svolte e previste) per tutti gli alunni?',rcv1:'Segnare come incassate le lezioni svolte del mese?',rcvAll:'Segnare come incassate le lezioni svolte del mese per tutti gli alunni?',mM:'Mese',mY:'Anno',mT:'Totale',inc:'Entrate',outc:'Uscite',item:'Voce',act:'Effettivo',pend:'In sospeso',bal:'Saldo',lEnr:'Iscrizioni',lLes:'Quote lezioni',lOi:'Altre entrate',lComp:'Compensi',lOo:'Altre uscite',oth:'Altre voci',desc:'Descrizione',amt:'Importo',typ:'Tipo',tin:'Entrata',tout:'Uscita',delE:'Eliminare la voce?',brand:'Nome Scuola',brandQ:'Nome istituzione','tab.cal':'Calendario','tab.tea':'Insegnanti','tab.stu':'Alunni','tab.ins':'Strumenti','tab.aul':'Aule','tab.les':'Lezioni','tab.ore':'Ore',
 allT:'Tutti gli insegnanti',today:'Oggi',exj:'Esporta JSON',exp:'Esporta PDF del mese',imp:'Importa',thm:'Tema',
 student:'Alunno',teacher:'Insegnante',room:'Aula',date:'Data',time:'Ora',dur:'Durata (min)',status:'Stato','st.planned':'Prevista','st.done':'Svolta','st.absent':'Assente',
 rep:'Ripeti (settimane)',paid:'Retribuita',notes:'Note',del:'Elimina',del1b:'Elimina questo',delAll:n=>`Elimina tutti (${n})`,makeup:'Recupero',cancel:'Annulla',save:'Salva',apply:'Applica',
@@ -137,9 +138,9 @@ setAu:(n,p)=>`Impostare l'aula per tutte le ${n} lezioni di ${p}?`,clrI:'Elimina
 delN:n=>`Eliminare ${n} lezioni?`,del1q:"Eliminare lezione?",clrO:(n,m)=>`Eliminare le ${n} lezioni di ${m}?`,pay1:'Segnare come retribuite le ore svolte del mese?',payAll:'Segnare come retribuite le ore svolte del mese per tutti gli insegnanti?',
 noLes:'Nessuna lezione da modificare',noChg:'Nessuna modifica selezionata',bConf:(n,p)=>`Modificare ${n} lezioni di ${p}?`,badF:'File non valido',repl:'Sostituire i dati attuali?',
 pTea:'INSEGNANTI',pTh:['Insegnante','Svolte','Prev.','Retr.','Da retr.','Lez.','Dis.','Tariffa','Tar.dis.','Da pagare','Pagato'],pLg:'Lez. = da pagare (svolte non retribuite + previste)   Dis. = di cui con disabilità',pCur:c=>`Importi in ${c}`,
-pIns:'STRUMENTI',pHrs:'ORE',pHh:['Alunno','Età','Strumento','Insegnante','Prev.','Svolte','Assenze','Da rec.'],pLes:'LEZIONI',pLh:['Data','Ora','Alunno','Strum.','Insegnante','Aula','Min','Stato','Retr.'],
+pPay:'PAGAMENTI',pBil:'BILANCIO',pPh:['Alunno','Iscr. ric.','Iscr. da ric.','Lez.','Ricevuto','Da ric.'],pIns:'STRUMENTI',pHrs:'ORE',pHh:['Alunno','Età','Strumento','Insegnante','Prev.','Svolte','Assenze','Da rec.'],pLes:'LEZIONI',pLh:['Data','Ora','Alunno','Strum.','Insegnante','Aula','Min','Stato','Retr.'],
 pLg2:'R = recupero   (rec.) = recuperata   Retr. = retribuita',pMk:'RECUPERI DA FARE',more:n=>`+${n} altre`,pCal:'x = assente   R = recupero   * = alunno con disabilità   corsivo = note'},
-en:{brand:'School Name',brandQ:'Institution name','tab.cal':'Calendar','tab.tea':'Teachers','tab.stu':'Students','tab.ins':'Instruments','tab.aul':'Rooms','tab.les':'Lessons','tab.ore':'Hours',
+en:{'tab.pag':'Payments','tab.bil':'Balance',rcv:'Received',feeDef:'Default fees',feeEnr:'Enrollment fee',feeLes:'Lesson fee',enrs:'Enrollments',recd:'Received',toRcv:'To receive',nLes:'Les.',rcvM:'Collect done',rcvT:'Collect all',rcvA1:'Mark all lessons of the month (done and planned) as received?',rcvAA:'Mark all lessons of the month (done and planned) as received for all students?',rcv1:'Mark done lessons of the month as received?',rcvAll:'Mark done lessons of the month as received for all students?',mM:'Month',mY:'Year',mT:'All',inc:'Income',outc:'Expenses',item:'Item',act:'Actual',pend:'Pending',bal:'Balance',lEnr:'Enrollments',lLes:'Lesson fees',lOi:'Other income',lComp:'Compensation',lOo:'Other expenses',oth:'Other items',desc:'Description',amt:'Amount',typ:'Type',tin:'Income',tout:'Expense',delE:'Delete item?',brand:'School Name',brandQ:'Institution name','tab.cal':'Calendar','tab.tea':'Teachers','tab.stu':'Students','tab.ins':'Instruments','tab.aul':'Rooms','tab.les':'Lessons','tab.ore':'Hours',
 allT:'All teachers',today:'Today',exj:'Export JSON',exp:'Export month PDF',imp:'Import',thm:'Theme',
 student:'Student',teacher:'Teacher',room:'Room',date:'Date',time:'Time',dur:'Duration (min)',status:'Status','st.planned':'Planned','st.done':'Done','st.absent':'Absent',
 rep:'Repeat (weeks)',paid:'Paid',notes:'Notes',del:'Delete',del1b:'Delete this',delAll:n=>`Delete all (${n})`,makeup:'Make-up',cancel:'Cancel',save:'Save',apply:'Apply',
@@ -153,7 +154,7 @@ setAu:(n,p)=>`Set the room for all ${n} lessons of ${p}?`,clrI:'Delete all instr
 delN:n=>`Delete ${n} lessons?`,del1q:'Delete lesson?',clrO:(n,m)=>`Delete the ${n} lessons of ${m}?`,pay1:'Mark this month\'s done hours as paid?',payAll:'Mark this month\'s done hours as paid for all teachers?',
 noLes:'No lessons to change',noChg:'No change selected',bConf:(n,p)=>`Change ${n} lessons of ${p}?`,badF:'Invalid file',repl:'Replace current data?',
 pTea:'TEACHERS',pTh:['Teacher','Done','Plan.','Paid','To pay','Les.','Dis.','Rate','Dis.rate','Due','Paid'],pLg:'Les. = to pay (done unpaid + planned)   Dis. = of which with disability',pCur:c=>`Amounts in ${c}`,
-pIns:'INSTRUMENTS',pHrs:'HOURS',pHh:['Student','Age','Instrument','Teacher','Plan.','Done','Absent','Make-up'],pLes:'LESSONS',pLh:['Date','Time','Student','Instr.','Teacher','Room','Min','Status','Paid'],
+pPay:'PAYMENTS',pBil:'BALANCE',pPh:['Student','Enr. rec.','Enr. due','Les.','Received','To rec.'],pIns:'INSTRUMENTS',pHrs:'HOURS',pHh:['Student','Age','Instrument','Teacher','Plan.','Done','Absent','Make-up'],pLes:'LESSONS',pLh:['Date','Time','Student','Instr.','Teacher','Room','Min','Status','Paid'],
 pLg2:'R = make-up   (rec.) = made up   Paid = paid',pMk:'MAKE-UPS DUE',more:n=>`+${n} more`,pCal:'x = absent   R = make-up   * = student with disability   italic = notes'}};
 let lg,SY='';try{lg=localStorage.getItem('acadL')}catch{}
 if(!DICT[lg])lg=navigator.language?.startsWith('it')?'it':'en';
@@ -168,21 +169,21 @@ function applyI18n(){
  document.querySelectorAll('.lg button').forEach(b=>b.classList.toggle('on',b.dataset.l===lg));
 }
 function setLang(x){lg=x;try{localStorage.setItem('acadL',x)}catch{}render()}
-const empty=()=>({name:'',teachers:[],students:[],instruments:[],rooms:[],lessons:[]});
+const empty=()=>({name:'',teachers:[],students:[],instruments:[],rooms:[],lessons:[],fees:{enr:0,les:0},entries:[]});
 const brand=()=>db.name||_('brand'),slug=()=>brand().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toLowerCase()||'school';
 function editB(){const e=$('#bn');if(e.isContentEditable)return;e.contentEditable=true;e.textContent=db.name;e.focus();getSelection().selectAllChildren(e)}
 function keyB(ev){if(ev.key==='Enter'){ev.preventDefault();ev.target.blur()}else if(ev.key==='Escape'){ev.target.dataset.x=1;ev.target.blur()}}
 function endB(e){if(!e.isContentEditable)return;e.contentEditable=false;if(!e.dataset.x){const n=e.textContent.trim();db.name=n;save()}delete e.dataset.x;render()}
 const SM={prevista:'planned',svolta:'done',assente:'absent'};
-function mig(d){d.teachers??=[];d.rooms??=[];d.name??='';
- d.students.forEach(s=>{s.tid??='';s.iids??=s.iid?[s.iid]:[];delete s.iid});
+function mig(d){d.teachers??=[];d.rooms??=[];d.name??='';d.fees??={enr:0,les:0};d.entries??=[];
+ d.students.forEach(s=>{s.tid??='';s.iids??=s.iid?[s.iid]:[];delete s.iid;s.enr??='';s.fee??='';s.enrP??=false;s.enrD??=d.lessons.filter(l=>l.sid===s.id).map(l=>l.date).sort()[0]||iso(new Date())});
  d.lessons.forEach(l=>{l.tid??='';l.paid??=false;l.st=SM[l.st]||l.st});
  d.teachers.forEach(t=>{t.rate??=0;t.rateD??=t.rate;t.iids??=[]});
  [...d.teachers,...d.students].forEach(p=>{if(p.surname===undefined){const w=String(p.name||'').trim().split(/\s+/).filter(Boolean);if(w.length>1){p.surname=w.pop();p.name=w.join(' ')}else{p.surname='';p.name=w[0]||''}}});return d}
 let db;try{db=mig(JSON.parse(localStorage.getItem('acad'))||empty())}catch{db=empty()}
 const save=()=>{try{localStorage.setItem('acad',JSON.stringify(db))}catch{}};
 let view='cal',cur=new Date(),ed={},fl='';cur.setDate(1);
-const TABS=()=>Object.fromEntries('cal tea stu ins aul les ore'.split(' ').map(k=>[k,_('tab.'+k)]));
+const TABS=()=>Object.fromEntries('cal tea stu ins aul les ore pag bil'.split(' ').map(k=>[k,_('tab.'+k)]));
 const stu=id=>db.students.find(s=>s.id===id),ins=id=>db.instruments.find(i=>i.id===id);
 const ab=(a,b)=>String(a||'').localeCompare(String(b||''),loc(),{sensitivity:'base',numeric:true}),full=p=>p?[p.surname,p.name].filter(Boolean).join(' '):'',byP=(a,b)=>ab(a.surname,b.surname)||ab(a.name,b.name),sp=a=>[...a].sort(byP),insS=()=>[...db.instruments].sort((a,b)=>ab(a.name,b.name)),inames=ids=>(ids||[]).map(i=>ins(i)?.name).filter(Boolean).sort(ab);
 const sname=id=>full(stu(id))||'—',iname=sid=>inames(stu(sid)?.iids).join(', ');
@@ -210,8 +211,8 @@ function render(){
  auto();applyI18n();
  $('#nav').innerHTML=Object.entries(TABS()).map(([k,t])=>`<button class="${k===view?'on':''}" onclick="go('${k}')">${t}</button>`).join('');
  if(fl&&!tea(fl))fl='';
- $('#fs').innerHTML=`<option value="">${_('allT')}</option>`+tOpts(fl);$('#fs').style.display=db.teachers.length>1?'':'none';
- $('#v').innerHTML=({cal:vCal,tea:vTea,stu:vStu,ins:vIns,aul:vAul,les:vLes,ore:vOre})[view]();
+ $('#fs').innerHTML=`<option value="">${_('allT')}</option>`+tOpts(fl);$('#fs').style.display=db.teachers.length>1&&view!=='bil'?'':'none';
+ $('#v').innerHTML=({cal:vCal,tea:vTea,stu:vStu,ins:vIns,aul:vAul,les:vLes,ore:vOre,pag:vPag,bil:vBil})[view]();
 }
 
 function vCal(){
@@ -253,7 +254,7 @@ function vStu(){
  <td><select onchange="setAu('${s.id}',this.value)">${rOpts(s.aid)}</select>
  <td class="n"><input type="checkbox" ${s.dis?'checked':''} onchange="setD('${s.id}',this.checked)"><td class="n">${lsF().filter(l=>l.sid===s.id).length}<td class="n" style="white-space:nowrap"><button ${lsF().some(l=>l.sid===s.id)?'':'disabled'} title="${_('editAll')}" onclick="openBulk('${s.id}')">${_('lesBtn')}</button> <button class="x" onclick="delS('${s.id}')">✕</button></tr>`).join('')}</table></div>`;
 }
-function addS(){const n=$('#nn').value.trim(),c=$('#nc').value.trim();if(!n&&!c)return;db.students.push({id:uid(),name:n,surname:c,age:$('#na').value===''?'':+$('#na').value,iids:[...document.querySelectorAll('#ni button.on')].map(b=>b.dataset.i),tid:$('#nt').value,dis:$('#nd').checked,aid:$('#nau').value});save();render()}
+function addS(){const n=$('#nn').value.trim(),c=$('#nc').value.trim();if(!n&&!c)return;db.students.push({id:uid(),name:n,surname:c,age:$('#na').value===''?'':+$('#na').value,iids:[...document.querySelectorAll('#ni button.on')].map(b=>b.dataset.i),tid:$('#nt').value,dis:$('#nd').checked,aid:$('#nau').value,enr:'',fee:'',enrP:false,enrD:iso(new Date())});save();render()}
 function renS(id,k){const s=stu(id),n=prompt(k==='surname'?_('ln'):_('fn'),s[k]||'');if(n!==null&&(n.trim()||s[k==='name'?'surname':'name'])){s[k]=n.trim();save();render()}}
 function togSI(id,iid){const s=stu(id),a=s.iids||[];s.iids=a.includes(iid)?a.filter(x=>x!==iid):[...a,iid];save();render()}
 function setA(id,v){stu(id).age=v===''?'':Math.max(0,+v||0);save()}
@@ -280,12 +281,13 @@ function clrR(){if(!db.rooms.length||!confirm(_('clrR')))return;db.rooms=[];db.s
 function delR(id){if(!confirm(_('delR')))return;db.rooms=db.rooms.filter(r=>r.id!==id);db.students.forEach(s=>{if(s.aid===id)s.aid=''});db.lessons.forEach(l=>{if(l.aid===id)l.aid=''});save();render()}
 
 function vLes(){
- const rows=(a,rec)=>`<div class="w"><table class="lt"><tr><th>${_('date')}<th>${_('time')}<th>${_('student')}<th>${_('instr')}<th>${_('teacher')}<th>${_('room')}<th class="n">${_('min')}<th>${_('status')}<th class="n">${_('paid')}<th>${_('notes')}<th></tr>${a.map(l=>`<tr><td class="m">${l.date}<td class="m">${l.time}<td>${l.mk?'↺ ':''}${esc(sname(l.sid))}<td>${esc(iname(l.sid))}<td>${esc(tname(l.tid))}<td>${esc(rname(l.aid))}<td class="n">${l.dur}<td class="s-${l.st}">${_('st.'+l.st)}${l.st==='absent'&&recovered(l)?' ✓':''}<td class="n"><input type="checkbox" ${l.paid?'checked':''} onchange="setP('${l.id}',this.checked)"><td style="color:var(--mut)">${esc(l.note)}
+ const rows=(a,rec)=>`<div class="w"><table class="lt"><tr><th>${_('date')}<th>${_('time')}<th>${_('student')}<th>${_('instr')}<th>${_('teacher')}<th>${_('room')}<th class="n">${_('min')}<th>${_('status')}<th class="n">${_('paid')}<th class="n">${_('rcv')}<th>${_('notes')}<th></tr>${a.map(l=>`<tr><td class="m">${l.date}<td class="m">${l.time}<td>${l.mk?'↺ ':''}${esc(sname(l.sid))}<td>${esc(iname(l.sid))}<td>${esc(tname(l.tid))}<td>${esc(rname(l.aid))}<td class="n">${l.dur}<td class="s-${l.st}">${_('st.'+l.st)}${l.st==='absent'&&recovered(l)?' ✓':''}<td class="n"><input type="checkbox" ${l.paid?'checked':''} onchange="setP('${l.id}',this.checked)"><td class="n"><input type="checkbox" ${l.rc?'checked':''} onchange="setRc('${l.id}',this.checked)"><td style="color:var(--mut)">${esc(l.note)}
  <td class="n">${rec?`<button class="p" onclick="recFor('${l.id}')">${_('makeupBtn')}</button> `:''}<button onclick="openL('${l.id}')">✎</button></tr>`).join('')}</table></div>`;
  const r=sorted(toRec());
  return (lsF().length?`<div class="bar"><button class="x" style="margin-left:auto" onclick="clrL()">${_('rmF')}</button></div>`:'')+(r.length?`<h3>${_('dueMk')} · ${r.length}</h3>`+rows(r,1):'')+`<h3>${_('allL')}</h3>`+rows(sorted(lsF()).reverse());
 }
 function setP(id,v){setPaid(db.lessons.find(l=>l.id===id),v);save()}
+function setRc(id,v){setRcv(db.lessons.find(l=>l.id===id),v);save()}
 function clrL(){const ids=new Set(lsF().map(l=>l.id));wipe(ids,_('delN',ids.size))}
 
 function ore(){
@@ -314,13 +316,64 @@ function payM(id){
  const p=ym();lsF().forEach(l=>{if((!id||l.tid===id)&&l.st==='done'&&l.date.startsWith(p)&&!l.paid)setPaid(l,true)});save();render();
 }
 
+const ov=(v,d)=>v===''||v==null?d:v,fEnr=s=>ov(s.enr,db.fees.enr),fLes=id=>ov(stu(id)?.fee,db.fees.les),bill=l=>l.st==='done'||l.st==='planned';
+const sm=(a,f)=>a.reduce((t,x)=>t+f(x),0),enrIn=s=>s.enrP?ov(s.enrA,fEnr(s)):0,enrDue=s=>s.enrP?0:fEnr(s);
+const setRcv=(l,v)=>{l.rc=v;if(v)l.ramt=fLes(l.sid);else delete l.ramt};
+const nIn=(v,ph,fn,w=90)=>`<input class="ns" type="number" min="0" step="any" value="${v}" placeholder="${ph}" style="width:${w}px;text-align:right" onchange="${fn}">`;
+const pb=(id,td,ta)=>(td&&td<ta?`<button class="p" style="margin:2px" onclick="payRcv('${id}')">${_('rcvM')}</button>`:'')+(ta?`<button class="p" style="margin:2px" onclick="payRcv('${id}',1)">${_('rcvT')}</button>`:'');
+const payRows=()=>{const p=ym();return sp(fl?db.students.filter(s=>s.tid===fl):db.students).map(s=>{const a=lsF().filter(l=>l.sid===s.id&&l.date.startsWith(p)&&bill(l)),q=fLes(s.id);return{s,n:a.length,got:sm(a.filter(l=>l.rc),l=>ov(l.ramt,q)),due:a.filter(l=>!l.rc).length*q,td:a.filter(l=>l.st==='done'&&!l.rc).length,ta:a.filter(l=>!l.rc).length}}).filter(r=>!fl||r.n)};
+const LB='style="display:flex;gap:6px;align-items:center"';
+function vPag(){
+ const p=ym(),F=db.fees,ss=sp(fl?db.students.filter(s=>s.tid===fl):db.students);
+ const R=payRows();
+ return `<h3>${_('feeDef')}</h3><div class="bar"><label ${LB}>${_('feeEnr')} ${nIn(F.enr,0,"setF('enr',this.value)",100)}</label><label ${LB}>${_('feeLes')} ${nIn(F.les,0,"setF('les',this.value)",100)}</label></div>
+ <h3>${_('enrs')}</h3><div class="w"><table class="pt"><tr><th>${_('student')}<th class="n">${_('feeEnr')}<th class="n">${_('rcv')}<th class="n">${_('recd')}<th class="n">${_('toRcv')}<th>${_('date')}</tr>${ss.map(s=>`<tr><td>${esc(full(s))}<td class="n">${nIn(s.enr,F.enr,`setQ('${s.id}','enr',this.value)`)}<td class="n"><input type="checkbox" ${s.enrP?'checked':''} onchange="setEP('${s.id}',this.checked)"><td class="n">${eur(enrIn(s))}<td class="n">${eur(enrDue(s))}<td><input type="date" value="${s.enrD}" onchange="setED('${s.id}',this.value)"></tr>`).join('')}<tfoot><tr><td>${_('total')}<td><td><td class="n">${eur(sm(ss,enrIn))}<td class="n">${eur(sm(ss,enrDue))}<td></tr></tfoot></table></div>
+ <h3>${_('les')}</h3>${nav()}<div class="w"><table><tr><th>${_('student')}<th class="n">${_('feeLes')}<th class="n">${_('nLes')}<th class="n">${_('recd')}<th class="n">${_('toRcv')}<th></tr>${R.map(({s,n,got,due,td,ta})=>`<tr><td>${esc(full(s))}<td class="n">${nIn(s.fee,F.les,`setQ('${s.id}','fee',this.value)`)}<td class="n">${n}<td class="n">${eur(got)}<td class="n">${eur(due)}<td class="n">${pb(s.id,td,ta)}</tr>`).join('')}<tfoot><tr><td>${_('total')}<td><td class="n">${sm(R,r=>r.n)}<td class="n">${eur(sm(R,r=>r.got))}<td class="n">${eur(sm(R,r=>r.due))}<td class="n">${R.length>1?pb('',sm(R,r=>r.td),sm(R,r=>r.ta)):''}</tr></tfoot></table></div>`;
+}
+function setF(k,v){db.fees[k]=Math.max(0,+v||0);save();render()}
+function setQ(id,k,v){stu(id)[k]=v===''?'':Math.max(0,+v||0);save();render()}
+function setEP(id,v){const s=stu(id);s.enrP=v;if(v)s.enrA=fEnr(s);else delete s.enrA;save();render()}
+function setED(id,v){if(v){stu(id).enrD=v;save();render()}}
+function payRcv(id,all){
+ if(!confirm(_(all?(id?'rcvA1':'rcvAA'):(id?'rcv1':'rcvAll'))))return;
+ const p=ym();lsF().forEach(l=>{if((!id||l.sid===id)&&(all?bill(l):l.st==='done')&&l.date.startsWith(p)&&!l.rc)setRcv(l,true)});save();render();
+}
+
+let bm='m';
+const inP=d=>bm==='t'||d.startsWith(bm==='m'?ym():String(cur.getFullYear()));
+function bnav(){
+ const st=bm==='a'?12:1,lb=bm==='a'?cur.getFullYear():cur.toLocaleDateString(loc(),{month:'long',year:'numeric'});
+ return `<div class="bar"><span class="sg">${[['m','mM'],['a','mY'],['t','mT']].map(([k,t])=>`<button class="${k===bm?'on':''}" onclick="bm='${k}';render()">${_(t)}</button>`).join('')}</span>`+(bm==='t'?'':`<button onclick="mv(-${st})">‹</button><h2>${lb}</h2><button onclick="mv(${st})">›</button><button onclick="cur=new Date();cur.setDate(1);render()">${_('today')}</button>`)+'</div>';
+}
+function bil(P=inP){
+ const L=db.lessons.filter(l=>bill(l)&&P(l.date)),E=db.entries.filter(e=>P(e.date)),S=db.students.filter(s=>P(s.enrD));
+ const enr=[sm(S,enrIn),sm(S,enrDue)],les=[sm(L.filter(l=>l.rc),l=>ov(l.ramt,fLes(l.sid))),sm(L.filter(l=>!l.rc),l=>fLes(l.sid))],
+  oi=sm(E.filter(e=>e.type==='in'),e=>e.amt),oo=sm(E.filter(e=>e.type!=='in'),e=>e.amt),
+  tc=sp(db.teachers).map(t=>{const a=L.filter(l=>l.tid===t.id);return{t,v:[sm(a.filter(l=>l.paid),l=>ov(l.amt,price(l))),sm(a.filter(l=>!l.paid),price)]}});
+ return{enr,les,oi,oo,tc,E,inc:[enr[0]+les[0]+oi,enr[1]+les[1]],out:[sm(tc,x=>x.v[0])+oo,sm(tc,x=>x.v[1])]};
+}
+function vBil(){
+ const B=bil(),H=`<tr><th>${_('item')}<th class="n">${_('act')}<th class="n">${_('pend')}<th class="n">${_('total')}</tr>`,
+  row=(n,v)=>`<tr><td>${n}<td class="n">${eur(v[0])}<td class="n">${eur(v[1])}<td class="n">${eur(v[0]+v[1])}</tr>`,
+  foot=v=>`<tfoot>${row(_('total'),v)}</tfoot>`,bl=[B.inc[0]-B.out[0],B.inc[1]-B.out[1]],c=v=>`class="n s-${v<0?'absent':'done'}"`,
+  dd=inP(iso(new Date()))?iso(new Date()):iso(cur);
+ return bnav()+`<h3>${_('inc')}</h3><div class="w"><table>${H}${row(_('lEnr'),B.enr)}${row(_('lLes'),B.les)}${row(_('lOi'),[B.oi,0])}${foot(B.inc)}</table></div>
+ <h3>${_('outc')}</h3><div class="w"><table>${H}${B.tc.map(({t,v})=>row(_('lComp')+' · '+esc(full(t)),v)).join('')}${row(_('lOo'),[B.oo,0])}${foot(B.out)}</table></div>
+ <h3>${_('bal')}</h3><div class="w"><table>${H}<tfoot><tr style="font-size:16px"><td>${_('bal')}<td ${c(bl[0])}>${eur(bl[0])}<td ${c(bl[1])}>${eur(bl[1])}<td ${c(bl[0]+bl[1])}>${eur(bl[0]+bl[1])}</tr></tfoot></table></div>
+ <h3>${_('oth')}</h3><div class="bar"><input type="date" id="xd" value="${dd}"><input id="xs" placeholder="${_('desc')}"><select id="xt"><option value="in">${_('tin')}</option><option value="out">${_('tout')}</option></select><input id="xa" class="ns" type="number" min="0" step="any" placeholder="${_('amt')}" style="width:100px"><button class="p" onclick="addE()">+</button></div>
+ <div class="w"><table><tr><th>${_('date')}<th>${_('desc')}<th>${_('typ')}<th class="n">${_('amt')}<th></tr>${[...B.E].sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<tr><td><input type="date" value="${e.date}" onchange="setE('${e.id}','date',this.value)"><td><input value="${esc(e.desc)}" onchange="setE('${e.id}','desc',this.value)"><td><select onchange="setE('${e.id}','type',this.value)"><option value="in" ${e.type==='in'?'selected':''}>${_('tin')}</option><option value="out" ${e.type!=='in'?'selected':''}>${_('tout')}</option></select><td class="n">${nIn(e.amt,0,`setE('${e.id}','amt',this.value)`)}<td class="n"><button class="x" onclick="delE('${e.id}')">✕</button></tr>`).join('')}</table></div>`;
+}
+function addE(){const d=$('#xs').value.trim(),a=Math.abs(+$('#xa').value||0);if(!d||!a)return;db.entries.push({id:uid(),date:$('#xd').value||iso(new Date()),type:$('#xt').value,desc:d,amt:a});save();render()}
+function setE(id,k,v){const e=db.entries.find(x=>x.id===id);if(k==='amt')v=Math.abs(+v||0);else if(k==='desc')v=v.trim();else if(k==='date'&&!v)return;e[k]=v;save();render()}
+function delE(id){if(!confirm(_('delE')))return;db.entries=db.entries.filter(e=>e.id!==id);save();render()}
+
 function openL(id,date,mk,sid){
  if(!db.teachers.length){go('tea');return}if(!db.students.length){go('stu');return}
  const l=id?db.lessons.find(x=>x.id===id):{sid:sid||sp(db.students)[0].id,date:date||iso(new Date()),time:'15:00',dur:60,st:'planned',note:'',mk:mk||''};
  ed={id,mk:l.mk,rid:l.rid};
  $('#sid').innerHTML=sp(db.students).map(s=>`<option value="${s.id}">${esc(full(s))}</option>`).join('');
  for(const k of['sid','date','time','dur','st','note'])f.elements[k].value=l[k];
- $('#tid').innerHTML=tOpts();f.elements.tid.value=l.tid||stu(l.sid)?.tid||fl||sp(db.teachers)[0].id;f.elements.paid.checked=!!l.paid;
+ $('#tid').innerHTML=tOpts();f.elements.tid.value=l.tid||stu(l.sid)?.tid||fl||sp(db.teachers)[0].id;f.elements.paid.checked=!!l.paid;f.elements.rc.checked=!!l.rc;
  $('#aid').innerHTML=rOpts();f.elements.aid.value=id?(l.aid||''):(l.aid||stu(l.sid)?.aid||'');
  f.elements.rep.value=1;
  $('#repL').style.display=id?'none':'';
@@ -333,10 +386,10 @@ function openL(id,date,mk,sid){
  dlg.showModal();
 }
 function saveL(e){
- e.preventDefault();const v=Object.fromEntries(new FormData(f)),b={sid:v.sid,tid:v.tid,aid:v.aid||'',paid:f.elements.paid.checked,time:v.time,dur:+v.dur,st:v.st,note:v.note,mk:ed.mk||''};
+ e.preventDefault();const v=Object.fromEntries(new FormData(f)),b={sid:v.sid,tid:v.tid,aid:v.aid||'',paid:f.elements.paid.checked,rc:f.elements.rc.checked,time:v.time,dur:+v.dur,st:v.st,note:v.note,mk:ed.mk||''};
  if(ed.id)Object.assign(db.lessons.find(l=>l.id===ed.id),b,{date:v.date});
  else{const N=Math.max(1,+v.rep||1),rid=N>1?uid():'';for(let i=0;i<N;i++){const d=pd(v.date);d.setDate(d.getDate()+7*i);db.lessons.push({id:uid(),...b,rid,date:iso(d)})}}
- db.lessons.forEach(l=>{if(!l.paid)delete l.amt;else l.amt??=price(l)});save();dlg.close();render();
+ db.lessons.forEach(l=>{if(!l.paid)delete l.amt;else l.amt??=price(l);if(!l.rc)delete l.ramt;else l.ramt??=fLes(l.sid)});save();dlg.close();render();
 }
 function delL(all){
  const ids=new Set(all&&ed.rid?db.lessons.filter(l=>l.rid===ed.rid).map(l=>l.id):[ed.id]);
@@ -353,7 +406,7 @@ function openBulk(id){
  cntB();dlgB.showModal();
 }
 function saveB(e){
- e.preventDefault();const v=fb.elements,a=bSel(),c={},pp=v.paid.value;
+ e.preventDefault();const v=fb.elements,a=bSel(),c={},pp=v.paid.value,pr=v.rc.value;
  if(!a.length){alert(_('noLes'));return}
  if(v.tid.value)c.tid=v.tid.value;
  if(v.aid.value!=='__')c.aid=v.aid.value;
@@ -361,9 +414,9 @@ function saveB(e){
  if(v.dur.value)c.dur=Math.max(5,+v.dur.value);
  if(v.st.value)c.st=v.st.value;
  if(v.clrn.checked)c.note='';else if(v.note.value.trim())c.note=v.note.value.trim();
- if(!Object.keys(c).length&&!pp){alert(_('noChg'));return}
+ if(!Object.keys(c).length&&!pp&&!pr){alert(_('noChg'));return}
  if(!confirm(_('bConf',a.length,sname(bs))))return;
- a.forEach(l=>{Object.assign(l,c);if(pp)setPaid(l,pp==='1')});
+ a.forEach(l=>{Object.assign(l,c);if(pp)setPaid(l,pp==='1');if(pr)setRcv(l,pr==='1')});
  save();dlgB.close();render();
 }
 function recL(){const id=ed.id;dlg.close();recFor(id)}
@@ -395,6 +448,19 @@ function report(){
  a('');a(_('pLg2'));
  const r=sorted(toRec());
  if(r.length){a('');a(_('pMk'),1);r.forEach(l=>row([C(l.date,12),C(nm(l.sid),50),R(l.dur+' min',9)]))}
+ {const ph=_('pPh'),PR=payRows(),B=bil(d=>d.startsWith(p)),bl=[B.inc[0]-B.out[0],B.inc[1]-B.out[1]],hd=[_('item'),_('act'),_('pend'),_('total')],
+  ln=(t,v,b)=>row([C(t,40),R(n2(v[0]),14),R(n2(v[1]),14),R(n2(v[0]+v[1]),14)],b),hh4=()=>row([C(hd[0],40),R(hd[1],14),R(hd[2],14),R(hd[3],14)],1);
+  a('');a(_('pPay'),1);
+  row([C(ph[0],24),R(ph[1],10),R(ph[2],11),R(ph[3],6),R(ph[4],11),R(ph[5],11)],1);
+  PR.forEach(({s,n,got,due})=>row([C(nm(s.id),24),R(n2(enrIn(s)),10),R(n2(enrDue(s)),11),R(n,6),R(n2(got),11),R(n2(due),11)]));
+  row([C(_('total'),24),R(n2(sm(PR,r=>enrIn(r.s))),10),R(n2(sm(PR,r=>enrDue(r.s))),11),R(sm(PR,r=>r.n),6),R(n2(sm(PR,r=>r.got)),11),R(n2(sm(PR,r=>r.due)),11)],1);
+  a('');a(_('pBil'),1);a('');a(_('inc').toUpperCase(),1);hh4();
+  ln(_('lEnr'),B.enr);ln(_('lLes'),B.les);ln(_('lOi'),[B.oi,0]);ln(_('total'),B.inc,1);
+  a('');a(_('outc').toUpperCase(),1);hh4();
+  B.tc.forEach(({t,v})=>ln(_('lComp')+' '+full(t),v));ln(_('lOo'),[B.oo,0]);ln(_('total'),B.out,1);
+  a('');ln(_('bal').toUpperCase(),bl,1);
+  if(B.E.length){a('');a(_('oth').toUpperCase(),1);[...B.E].sort((x,y)=>x.date.localeCompare(y.date)).forEach(e=>row([C(e.date,12),C(e.desc,44),C(e.type==='in'?_('tin'):_('tout'),12),R(n2(e.amt),14)]))}
+  a('');a(_('pCur',CUR))}
  return L;
 }
 const pe=s=>String(s).replace(/[^\x20-\xff]/g,'?').replace(/[\\()]/g,'\\$&');
