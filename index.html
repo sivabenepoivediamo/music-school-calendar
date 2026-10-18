@@ -531,13 +531,13 @@ function mkPdf(P){
 }
 const PK=[['cal','tab.cal'],['tea','tab.tea'],['ins','tab.ins'],['hrs','tab.ore'],['les','tab.les'],['mk','dueMk'],['pay','tab.pag'],['bil','tab.bil']];
 let PS={cal:1,tea:0,ins:0,hrs:0,les:0,mk:0,pay:0,bil:0};try{Object.assign(PS,JSON.parse(localStorage.getItem('acadP')))}catch{}
-const pdfSync=()=>$('#pX').disabled=!PK.some(([k])=>PS[k]);
+const pdfSync=()=>{$('#pX').disabled=!PK.some(([k])=>PS[k]);try{localStorage.setItem('acadP',JSON.stringify(PS))}catch{}};
 function pdfDraw(){
  $('#pK').innerHTML=PK.map(([k,t])=>`<label style="display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--fg);font-size:14px"><input type="checkbox" ${PS[k]?'checked':''} onchange="PS['${k}']=this.checked;pdfSync()" style="width:auto;margin:0">${_(t)}</label>`).join('');
  $('#pF').innerHTML=`<option value="">${_('allT')}</option>`+tOpts(fl);$('#pFL').style.display=db.teachers.length>1?'':'none';pdfSync();
 }
 function openPdf(){pdfDraw();dlgP.showModal()}
-function expPdf(e){e.preventDefault();try{localStorage.setItem('acadP',JSON.stringify(PS))}catch{}dlgP.close();const a=document.createElement('a');a.href=URL.createObjectURL(mkPdf([...(PS.cal?[calPage()]:[]),...(PK.slice(1).some(([k])=>PS[k])?textPages(report()):[])]));a.download=slug()+'-'+cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'.pdf';a.click()}
+function expPdf(e){e.preventDefault();dlgP.close();const a=document.createElement('a');a.href=URL.createObjectURL(mkPdf([...(PS.cal?[calPage()]:[]),...(PK.slice(1).some(([k])=>PS[k])?textPages(report()):[])]));a.download=slug()+'-'+cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'.pdf';a.click()}
 
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db)],{type:'application/json'}));a.download=slug()+'-'+iso(new Date())+'.json';a.click()}
 function impF(i){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.students&&d.instruments&&d.lessons&&confirm(_('repl'))){db=mig(d);save();render()}}catch{alert(_('badF'))}};r.readAsText(i.files[0]);i.value=''}
