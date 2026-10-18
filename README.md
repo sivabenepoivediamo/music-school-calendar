@@ -1,4 +1,4 @@
-# music-school-calendar
+# Music School Calendar
 
 [English](#english) | [Italiano](#italiano)
 
