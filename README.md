@@ -29,7 +29,7 @@ License: MIT. This repository is a GitHub template.
 
 - Tabs: Calendar, Teachers, Students, Instruments, Rooms, Lessons, Hours, Payments, Balance.
 - Teacher filter (shown when there are two or more teachers): limits the views to one teacher. It does not apply to Balance, which always covers the whole school.
-- `⤓ JSON` and `⤓ PDF`: export. `⤒`: import.
+- `⤓ JSON` and `⤓ PDF`: export. `⤓ PDF` first asks what to include. `⤒`: import.
 - `IT` / `EN`: language. `◐`: light or dark theme. Both choices are remembered.
 
 ## The tabs
@@ -101,7 +101,7 @@ Every item has three columns: **Actual** (already received or paid), **Pending**
 ## Export and import
 
 - **JSON** contains all your data: school, people, lessons, default fees, student fees and payments, and other income and expenses. Use it for backups and to move data to another browser or device. Importing replaces the current data after confirmation. Files exported by older versions can be imported; missing fields are filled with defaults.
-- **PDF** covers the month shown: a calendar page, then a report with teachers and amounts, instruments, hours per student, the lesson list, the make-ups still due, then **Payments** (per student: enrollment received and to receive, lessons, amount received and to receive) and **Balance** (income, expenses, result, other items). Payments follow the teacher filter; the balance always covers the whole school. Characters outside Latin-1 print as `?`.
+- **PDF** covers the month shown. `⤓ PDF` opens a selection of what to include: Calendar, Teachers (hours and amounts, with instruments), Instruments, Hours (per student), Lessons (the list), Make-ups due, Payments and Balance. Tick any combination; only Calendar is ticked by default, and the choice is saved in the browser as soon as you tick or untick a box. With two or more teachers the dialog also has a teacher selector, so a teacher can pick their name, tick Calendar and Teachers, and print only their own calendar and earnings. Payments follow the teacher filter; the balance always covers the whole school. Characters outside Latin-1 print as `?`.
 - Both file names start with the institution name.
 
 ## Where data is stored
@@ -131,7 +131,7 @@ Every item has three columns: **Actual** (already received or paid), **Pending**
 
 Publishing the page does not publish data: each visitor has their own data in their own browser.
 
-Storage keys are `acad` (data), `acadT` (theme), `acadL` (language). All pages of one GitHub account share the same `<user>.github.io` storage, so if you publish several apps or copies under one account, rename these keys to avoid clashes.
+Storage keys are `acad` (data), `acadT` (theme), `acadL` (language), `acadP` (PDF selection). All pages of one GitHub account share the same `<user>.github.io` storage, so if you publish several apps or copies under one account, rename these keys to avoid clashes.
 
 **Data format** (JSON export)
 
@@ -189,7 +189,7 @@ Licenza: MIT. Questo repository è un template GitHub.
 
 - Schede: Calendario, Insegnanti, Alunni, Strumenti, Aule, Lezioni, Ore, Pagamenti, Bilancio.
 - Filtro insegnante (compare con due o più insegnanti): limita le viste a un solo insegnante. Non vale per il Bilancio, che riguarda sempre tutta la scuola.
-- `⤓ JSON` e `⤓ PDF`: esporta. `⤒`: importa.
+- `⤓ JSON` e `⤓ PDF`: esporta. `⤓ PDF` chiede prima cosa includere. `⤒`: importa.
 - `IT` / `EN`: lingua. `◐`: tema chiaro o scuro. Entrambe le scelte vengono ricordate.
 
 ## Le schede
@@ -261,7 +261,7 @@ Ogni voce ha tre colonne: **Effettivo** (già ricevuto o pagato), **In sospeso**
 ## Esportazione e importazione
 
 - Il **JSON** contiene tutti i dati: scuola, persone, lezioni, quote predefinite, quote e pagamenti degli alunni, altre entrate e uscite. Serve per le copie di sicurezza e per spostare i dati su un altro browser o dispositivo. L'importazione sostituisce i dati attuali, dopo conferma. I file esportati da versioni precedenti si possono importare; i campi mancanti vengono riempiti con valori predefiniti.
-- Il **PDF** riguarda il mese visualizzato: una pagina con il calendario, poi un resoconto con insegnanti e importi, strumenti, ore per alunno, elenco delle lezioni, recuperi ancora da fare, poi **Pagamenti** (per alunno: iscrizione ricevuta e da ricevere, lezioni, importo ricevuto e da ricevere) e **Bilancio** (entrate, uscite, saldo, altre voci). I pagamenti seguono il filtro insegnante; il bilancio riguarda sempre tutta la scuola. I caratteri fuori da Latin-1 vengono stampati come `?`.
+- Il **PDF** riguarda il mese visualizzato. `⤓ PDF` apre la scelta di cosa includere: Calendario, Insegnanti (ore e importi, con gli strumenti), Strumenti, Ore (per alunno), Lezioni (l'elenco), Recuperi da fare, Pagamenti e Bilancio. Si può spuntare qualsiasi combinazione; di default è spuntato solo il Calendario, e la scelta viene salvata nel browser appena spunti o togli una casella. Con due o più insegnanti la finestra ha anche il selettore dell'insegnante, così un insegnante può stampare solo il proprio calendario e i propri compensi. I pagamenti seguono il filtro insegnante; il bilancio riguarda sempre tutta la scuola. I caratteri fuori da Latin-1 vengono stampati come `?`.
 - I nomi di entrambi i file iniziano con il nome dell'istituzione.
 
 ## Dove sono salvati i dati
@@ -291,7 +291,7 @@ Ogni voce ha tre colonne: **Effettivo** (già ricevuto o pagato), **In sospeso**
 
 Pubblicare la pagina non pubblica i dati: ogni visitatore ha i propri dati nel proprio browser.
 
-Le chiavi di salvataggio sono `acad` (dati), `acadT` (tema), `acadL` (lingua). Tutte le pagine di uno stesso account GitHub condividono la memoria di `<utente>.github.io`: se pubblichi più app o più copie con lo stesso account, rinomina queste chiavi per evitare conflitti.
+Le chiavi di salvataggio sono `acad` (dati), `acadT` (tema), `acadL` (lingua), `acadP` (selezione del PDF). Tutte le pagine di uno stesso account GitHub condividono la memoria di `<utente>.github.io`: se pubblichi più app o più copie con lo stesso account, rinomina queste chiavi per evitare conflitti.
 
 **Formato dei dati** (esportazione JSON)
 
