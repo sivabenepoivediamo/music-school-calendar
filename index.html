@@ -131,7 +131,7 @@ const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${Str
 const hh=m=>+(m/60).toFixed(2);
 const CUR='EUR',LOC={it:"it-IT",en:'en-GB'};
 const DICT={
-it:{pdfT:'Contenuto del PDF',expB:'Esporta','tab.pag':'Pagamenti','tab.bil':'Bilancio',rcv:'Incassata',feeDef:'Quote predefinite',feeEnr:'Quota iscrizione',feeLes:'Quota lezione',enrs:'Iscrizioni',recd:'Ricevuto',toRcv:'Da ricevere',nLes:'Lez.',rcvM:'Incassa svolte',rcvT:'Incassa tutte',rcvA1:'Segnare come incassate tutte le lezioni del mese (svolte e previste)?',rcvAA:'Segnare come incassate tutte le lezioni del mese (svolte e previste) per tutti gli alunni?',rcv1:'Segnare come incassate le lezioni svolte del mese?',rcvAll:'Segnare come incassate le lezioni svolte del mese per tutti gli alunni?',mM:'Mese',mY:'Anno',mT:'Totale',inc:'Entrate',outc:'Uscite',item:'Voce',act:'Effettivo',pend:'In sospeso',bal:'Saldo',lEnr:'Iscrizioni',lLes:'Quote lezioni',lOi:'Altre entrate',lComp:'Compensi',lOo:'Altre uscite',oth:'Altre voci',desc:'Descrizione',amt:'Importo',typ:'Tipo',tin:'Entrata',tout:'Uscita',delE:'Eliminare la voce?',brand:'Nome Scuola',brandQ:'Nome istituzione','tab.cal':'Calendario','tab.tea':'Insegnanti','tab.stu':'Alunni','tab.ins':'Strumenti','tab.aul':'Aule','tab.les':'Lezioni','tab.ore':'Ore',
+it:{pdfT:'Contenuto del PDF',pdfRt:'Colonna Retr. (lezioni)',expB:'Esporta','tab.pag':'Pagamenti','tab.bil':'Bilancio',rcv:'Incassata',feeDef:'Quote predefinite',feeEnr:'Quota iscrizione',feeLes:'Quota lezione',enrs:'Iscrizioni',recd:'Ricevuto',toRcv:'Da ricevere',nLes:'Lez.',rcvM:'Incassa svolte',rcvT:'Incassa tutte',rcvA1:'Segnare come incassate tutte le lezioni del mese (svolte e previste)?',rcvAA:'Segnare come incassate tutte le lezioni del mese (svolte e previste) per tutti gli alunni?',rcv1:'Segnare come incassate le lezioni svolte del mese?',rcvAll:'Segnare come incassate le lezioni svolte del mese per tutti gli alunni?',mM:'Mese',mY:'Anno',mT:'Totale',inc:'Entrate',outc:'Uscite',item:'Voce',act:'Effettivo',pend:'In sospeso',bal:'Saldo',lEnr:'Iscrizioni',lLes:'Quote lezioni',lOi:'Altre entrate',lComp:'Compensi',lOo:'Altre uscite',oth:'Altre voci',desc:'Descrizione',amt:'Importo',typ:'Tipo',tin:'Entrata',tout:'Uscita',delE:'Eliminare la voce?',brand:'Nome Scuola',brandQ:'Nome istituzione','tab.cal':'Calendario','tab.tea':'Insegnanti','tab.stu':'Alunni','tab.ins':'Strumenti','tab.aul':'Aule','tab.les':'Lezioni','tab.ore':'Ore',
 allT:'Tutti gli insegnanti',today:'Oggi',exj:'Esporta JSON',exp:'Esporta PDF del mese',imp:'Importa',thm:'Tema',
 student:'Alunno',teacher:'Insegnante',room:'Aula',date:'Data',time:'Ora',dur:'Durata (min)',status:'Stato','st.planned':'Prevista','st.done':'Svolta','st.absent':'Assente',
 rep:'Ripeti (settimane)',paid:'Retribuita',notes:'Note',del:'Elimina',del1b:'Elimina questo',delAll:n=>`Elimina tutti (${n})`,makeup:'Recupero',cancel:'Annulla',save:'Salva',apply:'Applica',
@@ -147,7 +147,7 @@ noLes:'Nessuna lezione da modificare',noChg:'Nessuna modifica selezionata',bConf
 pTea:'INSEGNANTI',pTh:['Insegnante','Svolte','Prev.','Retr.','Da retr.','Lez.','Dis.','Tariffa','Tar.dis.','Da pagare','Pagato'],pLg:'Lez. = da pagare (svolte non retribuite + previste)   Dis. = di cui con disabilità',pCur:c=>`Importi in ${c}`,
 pPay:'PAGAMENTI',pBil:'BILANCIO',pPh:['Alunno','Iscr. ric.','Iscr. da ric.','Lez.','Ricevuto','Da ric.'],pIns:'STRUMENTI',pHrs:'ORE',pHh:['Alunno','Età','Strumento','Insegnante','Prev.','Svolte','Assenze','Da rec.'],pLes:'LEZIONI',pLh:['Data','Ora','Alunno','Strum.','Insegnante','Aula','Min','Stato','Retr.'],
 pLg2:'R = recupero   (rec.) = recuperata   Retr. = retribuita',pMk:'RECUPERI DA FARE',more:n=>`+${n} altre`,pCal:'x = assente   R = recupero   * = alunno con disabilità   corsivo = note'},
-en:{pdfT:'PDF content',expB:'Export','tab.pag':'Payments','tab.bil':'Balance',rcv:'Received',feeDef:'Default fees',feeEnr:'Enrollment fee',feeLes:'Lesson fee',enrs:'Enrollments',recd:'Received',toRcv:'To receive',nLes:'Les.',rcvM:'Collect done',rcvT:'Collect all',rcvA1:'Mark all lessons of the month (done and planned) as received?',rcvAA:'Mark all lessons of the month (done and planned) as received for all students?',rcv1:'Mark done lessons of the month as received?',rcvAll:'Mark done lessons of the month as received for all students?',mM:'Month',mY:'Year',mT:'All',inc:'Income',outc:'Expenses',item:'Item',act:'Actual',pend:'Pending',bal:'Balance',lEnr:'Enrollments',lLes:'Lesson fees',lOi:'Other income',lComp:'Compensation',lOo:'Other expenses',oth:'Other items',desc:'Description',amt:'Amount',typ:'Type',tin:'Income',tout:'Expense',delE:'Delete item?',brand:'School Name',brandQ:'Institution name','tab.cal':'Calendar','tab.tea':'Teachers','tab.stu':'Students','tab.ins':'Instruments','tab.aul':'Rooms','tab.les':'Lessons','tab.ore':'Hours',
+en:{pdfT:'PDF content',pdfRt:'Paid column (lessons)',expB:'Export','tab.pag':'Payments','tab.bil':'Balance',rcv:'Received',feeDef:'Default fees',feeEnr:'Enrollment fee',feeLes:'Lesson fee',enrs:'Enrollments',recd:'Received',toRcv:'To receive',nLes:'Les.',rcvM:'Collect done',rcvT:'Collect all',rcvA1:'Mark all lessons of the month (done and planned) as received?',rcvAA:'Mark all lessons of the month (done and planned) as received for all students?',rcv1:'Mark done lessons of the month as received?',rcvAll:'Mark done lessons of the month as received for all students?',mM:'Month',mY:'Year',mT:'All',inc:'Income',outc:'Expenses',item:'Item',act:'Actual',pend:'Pending',bal:'Balance',lEnr:'Enrollments',lLes:'Lesson fees',lOi:'Other income',lComp:'Compensation',lOo:'Other expenses',oth:'Other items',desc:'Description',amt:'Amount',typ:'Type',tin:'Income',tout:'Expense',delE:'Delete item?',brand:'School Name',brandQ:'Institution name','tab.cal':'Calendar','tab.tea':'Teachers','tab.stu':'Students','tab.ins':'Instruments','tab.aul':'Rooms','tab.les':'Lessons','tab.ore':'Hours',
 allT:'All teachers',today:'Today',exj:'Export JSON',exp:'Export month PDF',imp:'Import',thm:'Theme',
 student:'Student',teacher:'Teacher',room:'Room',date:'Date',time:'Time',dur:'Duration (min)',status:'Status','st.planned':'Planned','st.done':'Done','st.absent':'Absent',
 rep:'Repeat (weeks)',paid:'Paid',notes:'Notes',del:'Delete',del1b:'Delete this',delAll:n=>`Delete all (${n})`,makeup:'Make-up',cancel:'Cancel',save:'Save',apply:'Apply',
@@ -450,9 +450,9 @@ function report(){
  row([C(_('ofDis'),66),R(hh(T.d),7)]);a('');}
  if(S.les){const ls=sorted(lsF().filter(l=>l.date.startsWith(p)));
  a(_('pLes'),1);
- {const h=_('pLh');row([C(h[0],11),C(h[1],6),C(h[2],22),C(h[3],11),C(h[4],11),C(h[5],8),R(h[6],4),C('',2),C(h[7],14),C(h[8],5)],1)};
- ls.forEach(l=>{row([C(l.date,11),C(l.time,6),C((l.mk?'R ':'')+nm(l.sid),22),C(iname(l.sid),11),C(full(tea(l.tid))||'-',11),C(rname(l.aid),8),R(l.dur,4),C('',2),C(_('st.'+l.st).toLowerCase()+(l.st==='absent'&&recovered(l)?' (rec.)':''),14),C(l.paid?_('yes').toLowerCase():'',5)]);if(l.note)wrapT(l.note,90,' '.repeat(11),99).forEach(t=>a(t))});
- a('');a(_('pLg2'));}
+ {const h=_('pLh');row([C(h[0],11),C(h[1],6),C(h[2],22),C(h[3],11),C(h[4],11),C(h[5],8),R(h[6],4),C('',2),C(h[7],14),...(S.rt?[C(h[8],5)]:[])],1)};
+ ls.forEach(l=>{row([C(l.date,11),C(l.time,6),C((l.mk?'R ':'')+nm(l.sid),22),C(iname(l.sid),11),C(full(tea(l.tid))||'-',11),C(rname(l.aid),8),R(l.dur,4),C('',2),C(_('st.'+l.st).toLowerCase()+(l.st==='absent'&&recovered(l)?' (rec.)':''),14),...(S.rt?[C(l.paid?_('yes').toLowerCase():'',5)]:[])]);if(l.note)wrapT(l.note,90,' '.repeat(11),99).forEach(t=>a(t))});
+ a('');a(S.rt?_('pLg2'):_('pLg2').split('   ').slice(0,2).join('   '));}
  const r=sorted(toRec());
  if(S.mk&&r.length){a('');a(_('pMk'),1);r.forEach(l=>row([C(l.date,12),C(nm(l.sid),50),R(l.dur+' min',9)]))}
  {const ph=_('pPh'),PR=payRows(),B=bil(d=>d.startsWith(p)),bl=[B.inc[0]-B.out[0],B.inc[1]-B.out[1]],hd=[_('item'),_('act'),_('pend'),_('total')],
@@ -530,10 +530,15 @@ function mkPdf(P){
  return new Blob([Uint8Array.from(out,ch=>ch.charCodeAt(0))],{type:'application/pdf'});
 }
 const PK=[['cal','tab.cal'],['tea','tab.tea'],['ins','tab.ins'],['hrs','tab.ore'],['les','tab.les'],['mk','dueMk'],['pay','tab.pag'],['bil','tab.bil']];
-let PS={cal:1,tea:0,ins:0,hrs:0,les:0,mk:0,pay:0,bil:0};try{Object.assign(PS,JSON.parse(localStorage.getItem('acadP')))}catch{}
-const pdfSync=()=>{$('#pX').disabled=!PK.some(([k])=>PS[k]);try{localStorage.setItem('acadP',JSON.stringify(PS))}catch{}};
+let PS={cal:1,tea:0,ins:0,hrs:0,les:0,mk:0,pay:0,bil:0,rt:1};try{Object.assign(PS,JSON.parse(localStorage.getItem('acadP')))}catch{}
+const pdfSync=()=>{
+ $('#pX').disabled=!PK.some(([k])=>PS[k]);
+ const l=$('#pRtL');if(l){l.style.opacity=PS.les?1:.4;l.querySelector('input').disabled=!PS.les}
+ try{localStorage.setItem('acadP',JSON.stringify(PS))}catch{}
+};
 function pdfDraw(){
- $('#pK').innerHTML=PK.map(([k,t])=>`<label style="display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--fg);font-size:14px"><input type="checkbox" ${PS[k]?'checked':''} onchange="PS['${k}']=this.checked;pdfSync()" style="width:auto;margin:0">${_(t)}</label>`).join('');
+ $('#pK').innerHTML=PK.map(([k,t])=>`<label style="display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--fg);font-size:14px"><input type="checkbox" ${PS[k]?'checked':''} onchange="PS['${k}']=this.checked;pdfSync()" style="width:auto;margin:0">${_(t)}</label>`
+  +(k==='les'?`<label id="pRtL" style="display:flex;gap:8px;align-items:center;margin:6px 0 0 26px;color:var(--fg);font-size:13px"><input type="checkbox" ${PS.rt?'checked':''} onchange="PS.rt=this.checked;pdfSync()" style="width:auto;margin:0">${_('pdfRt')}</label>`:'')).join('');
  $('#pF').innerHTML=`<option value="">${_('allT')}</option>`+tOpts(fl);$('#pFL').style.display=db.teachers.length>1?'':'none';pdfSync();
 }
 function openPdf(){pdfDraw();dlgP.showModal()}
