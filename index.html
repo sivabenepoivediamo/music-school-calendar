@@ -514,46 +514,52 @@ function calPage(){
 }
 function regPages(){
  const W=842,H=595,M=30,y=cur.getFullYear(),m=cur.getMonth(),n=new Date(y,m+1,0).getDate(),p=ym(),
-  nw=150,cw=(W-2*M-nw)/n,RH=14,HH=24,LH=10,top=H-M-32,
+  HH=30,top=H-M-32,bot=M+14,MINR=18,MAXR=60,
   ls=lsF().filter(l=>l.date.startsWith(p)),
   ss=sp(db.students).filter(s=>ls.some(l=>l.sid===s.id)),
   code=l=>l.st==='absent'?'A':l.st==='done'?(l.mk?'R':'P'):'',
-  we=d=>[0,6].includes(new Date(y,m,d).getDay()),W7=wd(),pages=[];
- let c='',yy=0;
- const cell=(x,yb,w,h,g)=>`${g} g ${x.toFixed(1)} ${yb.toFixed(1)} ${w.toFixed(1)} ${h} re B 0 g\n`;
- const page=(hd=1)=>{
-  if(c)pages.push({w:W,h:H,c:c+tx(M,M-6,_('regLg'),0,7)});
-  c=tx(M,H-M-8,ACC(),1,12)+tx(M,H-M-20,SUB(),0,9)+tx(W-M-MESE().length*7.2,H-M-8,MESE(),1,12)+'0.6 G 0.5 w\n';
-  yy=top;
-  if(!hd)return;
-  c+=cell(M,yy-HH,nw,HH,.85)+tx(M+4,yy-15,_('student'),1,8);
+  we=d=>[0,6].includes(new Date(y,m,d).getDay()),W7=wd(),pages=[],
+  cod=s=>[...Array(n)].map((_x,i)=>ls.filter(l=>l.sid===s.id&&l.date===iso(new Date(y,m,i+1))).map(code).join('')),
+  area=top-HH-bot,per=Math.floor(area/MINR),np=Math.max(1,Math.ceil(ss.length/per)),pp=Math.max(1,Math.ceil(ss.length/np)),
+  RH=Math.min(MAXR,area/pp),
+  maxName=Math.max(4,...ss.map(s=>(full(s)+(s.dis?'*':'')).length)),
+  nf=Math.max(6,Math.min(13,RH*.55,220/(.6*maxName))),
+  nw=Math.min(232,maxName*.6*nf+14),
+  cw=(W-2*M-nw)/n,
+  CD=ss.map(cod),maxLen=Math.max(1,...CD.flat().map(t=>t.length)),
+  cf=Math.min(RH*.6,16,(cw-2)/(.6*maxLen)),
+  df=Math.min(11,(cw-2)/1.2),wf=Math.max(5,Math.min(8,df-1));
+ const cell=(x,yb,w,h,g)=>`${g} g ${x.toFixed(1)} ${yb.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)} re B 0 g\n`;
+ const head=()=>tx(M,H-M-8,ACC(),1,12)+tx(M,H-M-20,SUB(),0,9)+tx(W-M-MESE().length*7.2,H-M-8,MESE(),1,12)+'0.6 G 0.5 w\n';
+ const foot=()=>tx(M,M-6,_('regLg'),0,8);
+ for(let i=0;i<Math.max(1,Math.ceil(ss.length/pp));i++){
+  let c=head(),yy=top;
+  c+=cell(M,yy-HH,nw,HH,.85)+tx(M+5,yy-HH/2-3,_('student'),1,9);
   for(let d=1;d<=n;d++){
    const x=M+nw+(d-1)*cw,s=String(d);
-   c+=cell(x,yy-HH,cw,HH,.85)+tx(x+(cw-s.length*4.2)/2,yy-10,s,1,7)+tx(x+(cw-3.6)/2,yy-20,W7[(new Date(y,m,d).getDay()+6)%7][0],0,6);
+   c+=cell(x,yy-HH,cw,HH,.85)+tx(x+(cw-s.length*.6*df)/2,yy-13,s,1,df)+tx(x+(cw-.6*wf)/2,yy-HH+5,W7[(new Date(y,m,d).getDay()+6)%7][0],0,wf);
   }
   yy-=HH;
- };
- page();
- ss.forEach(s=>{
-  if(yy-RH<M+14)page();
-  const yb=yy-RH,nm=full(s)+(s.dis?'*':'');
-  c+=cell(M,yb,nw,RH,1)+tx(M+4,yb+4.5,nm.slice(0,Math.floor((nw-6)/4.8)),0,8);
-  for(let d=1;d<=n;d++){
-   const k=iso(new Date(y,m,d)),x=M+nw+(d-1)*cw,t=ls.filter(l=>l.sid===s.id&&l.date===k).map(code).join('');
-   c+=cell(x,yb,cw,RH,we(d)?.92:1)+(t?tx(x+(cw-t.length*4.2)/2,yb+4.5,t,1,7):'');
-  }
-  yy=yb;
- });
+  ss.slice(i*pp,(i+1)*pp).forEach((s,k)=>{
+   const yb=yy-RH,nm=(full(s)+(s.dis?'*':'')),codes=CD[i*pp+k];
+   c+=cell(M,yb,nw,RH,1)+tx(M+5,yb+RH/2-.3*nf,nm.slice(0,Math.floor((nw-8)/(.6*nf))),0,nf);
+   for(let d=1;d<=n;d++){
+    const x=M+nw+(d-1)*cw,t=codes[d-1];
+    c+=cell(x,yb,cw,RH,we(d)?.92:1)+(t?tx(x+(cw-t.length*.6*cf)/2,yb+RH/2-.3*cf,t,1,cf):'');
+   }
+   yy=yb;
+  });
+  pages.push({w:W,h:H,c:c+foot()});
+ }
  const nt=PS.regn?sorted(ls.filter(l=>l.note)):[];
  if(nt.length){
-  const nc=Math.floor((W-2*M)/4.2)-1,add=(t,b)=>{if(yy-LH<M+14)page(0);c+=tx(M,yy-LH+2,t,b,7);yy-=LH};
-  yy-=8;add(_('notes').toUpperCase(),1);
+  const nf2=9,LH=12,nc=Math.floor((W-2*M)/(.6*nf2))-1,cap=Math.floor((top-bot)/LH),lines=[{t:_('notes').toUpperCase(),b:1}];
   nt.forEach(l=>{
    const pre=`${l.date.slice(8)}/${l.date.slice(5,7)} ${sname(l.sid)}: `,w=wrapT(l.note,nc,' '.repeat(pre.length),99);
-   w[0]=pre+w[0].slice(pre.length);w.forEach(t=>add(t,0));
+   w[0]=pre+w[0].slice(pre.length);w.forEach(t=>lines.push({t,b:0}));
   });
+  for(let i=0;i<lines.length;i+=cap)pages.push({w:W,h:H,c:head()+lines.slice(i,i+cap).map((l,k)=>tx(M,top-nf2-k*LH,l.t,l.b,nf2)).join('')+foot()});
  }
- pages.push({w:W,h:H,c:c+tx(M,M-6,_('regLg'),0,7)});
  return pages;
 }
 function mkPdf(P){
